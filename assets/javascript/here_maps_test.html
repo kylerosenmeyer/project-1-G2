@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="UTF-8" src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
+
+    <style>
+        #mapContainer {
+            width: 640px;
+            height: 480px;
+        }
+    </style>
+    
+   
+</head>
+<body>
+    <!--This is the search box-->
+    <!-- <input type="text" id="searchBox1" placeholder="thing"> -->
+    <input type="text" id="searchBox2" placeholder="city">
+    <button id="searchBtn">Search</button>
+    <!--This is the container the map resides in.-->
+    <div id="mapContainer"></div>
+        
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
+    <!-- <script src="../javascript/app.js"></script> -->
+    <script>
+
+        //Declare some variables to be used in the map searches.
+        var map = "",
+            platform = "",
+            defaultLayers = "",
+            latitude = "",
+            longitude = ""
+
+        //Iniate the HERE Maps API by connecting to the service platform with the app id and app code. This code comes from the api documentation.
+        platform = new H.service.Platform({
+            'app_id': "qA8H4eSKAGPuJ30pTryC",
+            'app_code': "e7_nFDb6gHJ1Hvp40oOtSQ"
+
+        });
+
+        // call the default map layers from the API
+        defaultLayers = platform.createDefaultLayers();
+
+        
+       // This click event brings up the map from the search city.
+       $("#searchBtn").click( function() {
+
+           
+           //First get the lat and long of the search location by sending it to the API using the geo coding service.
+
+            // Create the parameter for the geocoding request (this must be an object with property "searchText"):
+            var searchParam = {
+                searchText: document.getElementById("searchBox2").value
+            };
+            
+            //
+            var mapDisplay = function(result) {
+                latitude = result.Response.View[0].Result[0].Location.DisplayPosition.Latitude 
+                longitude = result.Response.View[0].Result[0].Location.DisplayPosition.Longitude
+                console.log("Lat: " + latitude)
+                console.log("Long: " + longitude)
+
+                // Display map using H.Map in the format of (element, maptype, options). This code comes partially from the api documentation.
+                map = new H.Map(
+                //element (in vanilla JS only)
+                document.getElementById("mapContainer"),
+                //maptype
+                defaultLayers.terrain.map,
+                //Map settings (default zoom level and lat-long from the geocode results)
+                {   
+                zoom: 13,
+                //This is the search location
+                center: { lat: latitude, lng: longitude }})
+                console.log("Lat2: " + latitude)
+                console.log("Long2: " + longitude)
+
+                // This is the map events section (next 8 lines). This is pulled from the API documentation to make the map interactive.
+                var mapEvents = new H.mapevents.MapEvents(map);
+
+                // Add event listeners:
+                map.addEventListener('tap', function(evt) {
+                // Log 'tap' and 'mouse' events:
+                console.log(evt.type, evt.currentPointer.type); 
+                });
+
+                var behavior = new H.mapevents.Behavior(mapEvents);
+            }
+            
+            //This calls the geocoding service from the API.
+            var geocoder = platform.getGeocodingService();
+            //This executes the converstion of the search term to lat-long, and makes the map display!
+            geocoder.geocode(searchParam, mapDisplay, function(e) {
+            alert(e);
+            });
+        
+            
+        });
+
+        
+
+  
+        
+    </script>
+</body>
+</html>
