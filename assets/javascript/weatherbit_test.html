@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Weather Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+
+</head>
+<body>
+    
+    <input type="date" id="datePick">
+    <button  id="button1">Select a Start Date</button>
+    <br>
+    <input type="date" id="datePick2">
+    <button  id="button2">Select a End Date</button>
+    <br>
+    <input type="text" id="searchBox">
+    <button  id="button3">Select a Place</button>
+    <br>
+    <button  id="button4">Get Weather</button>
+    <div id="weatherReport"></div>
+    <br>
+    <button  id="button5">Get Weather2</button>
+    <div id="weatherReport2"></div>
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!-- <script src="../javascript/weather_test.js"></script> -->
+
+    <script>
+        //API Key: 929d8637e5cb4a0b83bffcfc9128e8dd
+
+        var city = "",
+            date = "",
+            apiKey = "929d8637e5cb4a0b83bffcfc9128e8dd",
+            date2 = ""
+
+        $("#button1").click( function() {
+            date = $("#datePick").val()
+            console.log("date: " + date)
+        })
+
+        $("#button2").click( function() {
+            date2 = $("#datePick2").val()
+            console.log("date: " + date2)
+        })
+
+        $("#button3").click( function() {
+            city = $("#searchBox").val().trim()
+            console.log("city: " + city)
+        })        
+
+        $("#button4").click( function() {
+            var queryURL = ("https://api.weatherbit.io/v2.0/history/daily?city=" + city + "&start_date=" + date + "&end_date=" + date + "&key=" + apiKey );
+            
+            console.log("query URL: " + queryURL)
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then( function(response) {
+                    var tempC = response.data[0].temp
+                    console.log("avg temp: " + tempC)
+                })
+        })
+
+        $("#button5").click( function() {
+            var queryURL2 = ("api.openweathermap.org/data/2.5/weather?q=" + city + "&appid==3ffc1c7fdf22f3e19d54c161f298bba5");
+            
+            console.log("query URL: " + queryURL2)
+            $.ajax({
+                url: queryURL2,
+                method: "GET"
+            }).then( function(response) {
+                    var tempC = response.main.temp
+                    console.log("avg temp: " + tempC)
+                })
+        })
+    
+    </script>
+
+</body>
+</html>
