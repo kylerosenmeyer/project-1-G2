@@ -20,8 +20,12 @@ html, body {
 
 .btn-primary {
 margin-top: 20px;
-float: center;
+float: auto;
 
+}
+
+.cityInput {
+margin: auto
 }
 
 .container-fluid {
@@ -38,8 +42,12 @@ float: center;
     border: 1px solid black;
 }
 
+.first {
+    height: 100%
+}
 
-.col-6, .col-3 {
+
+.col-6, .col-3, .col-4 {
     border: 1px solid black;
 }
 

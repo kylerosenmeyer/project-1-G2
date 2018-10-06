@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   </head>
   <body>
-        <div class="container-fluid">
+        <div class="container-fluid" id="page1">
          
             <div class="row row1">
                 
@@ -22,8 +22,8 @@
                     </div>
                     <div class="col-6">
                             <h1>Welcome To Your Travel Planner!</h1>
-                            <input type="text" class="form-control" placeholder="Enter Username">
-                            <a class="btn btn-primary" href="#" role="button"><button type="submit" class="btn btn-primary|secondary|success|danger|warning|info|light|dark|link">Submit</button></a>
+                            <input type="text" class="form-control" id="userIn" placeholder="Enter Username">
+                            <button type="submit" class="btn btn-primary" id="user-submit">Submit</button>
                     </div>
                     <div class="col-3">
                        
@@ -33,12 +33,34 @@
                     
             </div>
         </div>
+        <div class="container-fluid" id="page2">
+            <div class="row first">
+              <div class="col-4">     
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Where would you like to travel?</h5>
+                    <form>
+                      <div class="form-row">
+                        <div class="col-7 cityInput">
+                          <input type="text" class="form-control" placeholder="City">
+                        </div>
+                      </div>
+                    </form>
+                    <a class="btn btn-primary" href="#" role="button">Submit</a>
+                  </div>
+                </div>
+            </div>
+              <div class="col-4"></div>
+              <div class="col-4"></div>
+            </div>
 
+        </div>
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+    <script src="assets/javascript/app.js"><//script>
   </body>
 </html>
