@@ -1,6 +1,8 @@
 /*Travel Styling Here */
-body {
-    background-color: black;
+html, body {
+    height: 100%;
+    padding:0;
+    margin: 0;
 }
 
 .card-deck {
@@ -18,5 +20,30 @@ body {
 
 .btn-primary {
 margin-top: 20px;
-float: right
+float: center;
+
+}
+
+.container-fluid {
+    background-color: lightgray;
+    font: tahoma 20px;
+    height: 100%;
+    text-align: center;
+    padding: auto;
+    margin: auto;
+}
+
+.row {
+    height: 50%;
+    border: 1px solid black;
+
+}
+
+.col-6, .col-3 {
+    border: 1px solid black;
+}
+
+.row1, .row3 {
+height: 25%;
+
 }
