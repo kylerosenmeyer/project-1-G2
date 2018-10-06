@@ -36,8 +36,8 @@ float: center;
 .row {
     height: 50%;
     border: 1px solid black;
-
 }
+
 
 .col-6, .col-3 {
     border: 1px solid black;
@@ -45,5 +45,9 @@ float: center;
 
 .row1, .row3 {
 height: 25%;
+}
 
+.page-header {
+text-align: center;
+background-color: red
 }
