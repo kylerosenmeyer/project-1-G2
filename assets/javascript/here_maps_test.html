@@ -16,8 +16,8 @@
 
     <style>
         #mapContainer {
-            width: 640px;
-            height: 480px;
+            width: 25em;
+            height: 25em;
         }
     </style>
     
@@ -41,7 +41,8 @@
             platform = "",
             defaultLayers = "",
             latitude = "",
-            longitude = ""
+            longitude = "",
+            userArray = [],
 
         //Iniate the HERE Maps API by connecting to the service platform with the app id and app code. This code comes from the api documentation.
         platform = new H.service.Platform({
@@ -85,6 +86,16 @@
                 center: { lat: latitude, lng: longitude }})
                 console.log("Lat2: " + latitude)
                 console.log("Long2: " + longitude)
+                    
+                userArray.push(searchParam.searchText, latitude, longitude)
+                console.log("userArray: " + userArray)
+
+                var group = new H.map.Group();
+                map.addObject(group);
+                var marker = new H.map.AbstractMarker();
+                marker.setPosition(latitude, longitude);
+                group.addObject(marker);
+                
 
                 // This is the map events section (next 8 lines). This is pulled from the API documentation to make the map interactive.
                 var mapEvents = new H.mapevents.MapEvents(map);
