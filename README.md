@@ -1,7 +1,15 @@
 # project-1-G2
-Group 2 Project 1 - Visual Travel Planner
+Group 2 Project 1 - Kyle Rosenmeyer, Doug Nguyen, Auden Black, Bobby Simmons
 
-Visual Travel Planner: Using flight information, vacation rental listings, webcams, and the google maps api, the user will get a unique set of information decide where to travel. 
+**Visual Travel Planner** (working title) is a web app to help you plan your next vacation, by putting you there. After collecting your travel interests, the app displays the usual weather, current traffic, available restaurants and more to your finger tips. 
+
+This app is usual learn how to tie together several web technologies to make a useful, and visually pleasing product. This app uses 3 APIs, 4 javascript libraries, a CSS framework, and firebase. 
+
+This project is not available for additional contribution from the github community, however
+the development team may be contacted through github with questions or requests.
+
+See the [Live Project Here.](https://kylerosenmeyer.github.io/project-1-G2/)
+See [Under the Hood Here.](https://github.com/kylerosenmeyer/project-1-G2)
 
 Team Roles
 
@@ -15,20 +23,18 @@ Kyle Rosenmeyer: Front End Javascript lead
 
 API Listing:
 
-From Mashape - 
+1. Here Maps API
 
-1. webcams.travel
+2. Weatherbit Historical Data API
 
-2. Zilyo
-
-3. Such Flight
-
-4. Maps (Leaflets.js or Open Layers.org or bing maps)
+3. Zomato Restauarants API
 
 Library/Technogies:
 
 1. ScrollReveal.js 
 2. D3.js for visuals
+3. JQuery
+4. Moment
 
 Schedule:
 
@@ -36,6 +42,8 @@ Schedule:
     6 Days devoted to functionality
     4 Days devoted to design
 2 Day presentation prep.
+
+
 
 
 
