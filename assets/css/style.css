@@ -1,9 +1,47 @@
 /*Travel Styling Here */
+/*html, body styled to be the same size as the view port */
 html, body {
     height: 100%;
     padding:0;
     margin: 0;
+    background-image: url("../images/brown_background.jpg")
 }
+
+/* Font Styling */
+h1 {
+    font-family: 'harabarahanditalic', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    font-size: 3em;
+    box-shadow: 8px 8px 8px 8px rgb(0,0,0,0.7)
+}
+       
+p {
+font-family: 'Pompiere', cursive;
+font-size: 3em;
+}
+
+/*Class Styling*/
+
+.chalkboard {
+    margin-top: 3%;
+    font-weight: bolder;
+    padding: 2%;
+    background-color: lightgrey;
+    border: 12px solid #c4a99a;
+    outline: 8px ridge black;
+    text-align: center;
+}
+
+.chalkboard:active {
+    font-weight: bolder;
+    padding: 2%;
+    background-color: lightgrey;
+    border: 12px solid #c4a99a;
+    outline: 8px ridge black;
+    text-align: center;
+}
+
 
 .card-deck {
     background-color: red;
@@ -44,8 +82,6 @@ outline: none;
 }
 
 .container-fluid {
-    background-color: lightgray;
-    font: tahoma 20px;
     height: 100%;
     text-align: center;
     padding: auto;
@@ -54,7 +90,7 @@ outline: none;
 
 .row {
     height: 50%;
-    border: 1px solid black;
+    border: 1px dashed black;
 }
 
 .first {
@@ -63,7 +99,7 @@ outline: none;
 
 
 .col-6, .col-3, .col-4 {
-    border: 1px solid black;
+    border: 1px dashed black;
 }
 
 .row1, .row3 {
@@ -73,6 +109,12 @@ height: 25%;
 .page-header {
 text-align: center;
 background-color: red
+}
+
+/*ID Styling */
+#userIn {
+    margin-top: 5%;
+    height: 2em;
 }
 
 #userName {

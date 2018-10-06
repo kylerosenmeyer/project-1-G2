@@ -1,73 +1,117 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
-    <title>Title</title>
+    <title>Travel Planner</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Resources -->
+    <link rel="stylesheet" type="text/css" href="../project-1-G2/assets/css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../project-1-G2/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="http://js.api.here.com/v3/3.0/mapsjs-ui.css">
+
+    <!--Font Resources-->
+    <link rel="stylesheet" type="text/css" href="assets/HarabaraHand-font/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css?family=Pompiere" rel="stylesheet">
     
   </head>
   <body>
-        <div class="container-fluid" id="page1">
-         
-            <div class="row row1">
-                
-            </div>
-                    <div class="col-3">
-            <div class="row">
-                      
-                    </div>
-                    <div class="col-6">
-                            <h1>Welcome To Your Travel Planner!</h1>
 
-                            <input type="text" class="form-control" id="userIn" placeholder="Enter Username">
-                            <button type="submit" class="btn btn-primary" id="user-submit">Submit</button>
-
-                    </div>
-                    <div class="col-3">
-                       
-                    </div>
+    <!--This is the Page 1 Container, with 3 rows-->
+    <div class="container-fluid" id="page1">
+        <!--This is Row 1, Page 1-->
+        <div class="row row1"></div>
+        <!--This is Row 2, Page 1-->
+        <div class="row row2">
+          <div class="col-3" id="page1Left"></div>
+            <div class="col-6" id="page1Center">
+              <h1 class="chalkboard">Welcome To Your Travel Planner!</h1>
+              <input type="text" class="form-control chalkboard" id="userIn" placeholder="Enter Username">
+              <button type="submit" class="btn btn-primary" id="user-submit">Submit</button>
             </div>
-            <div class="row row3">
-                    
-            </div>
+            <div class="col-3" id="page1Right"></div>
         </div>
-        <div class="container-fluid" id="page2">
-            <div class="row first">
-              <div class="col-4">     
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Where would you like to travel?</h5>
-                    <form>
-                      <div class="form-row">
-                        <div class="col-7 cityInput">
-                          <input type="text" class="form-control" placeholder="City">
-                        </div>
-                      </div>
-                    </form>
-                    <a class="btn btn-primary" href="#" role="button">Submit</a>
+        <!--This is Row 3, Page 1-->
+        <div class="row row3"></div>
+    </div>
+
+    <!--This is the Page 2 Container, with 1 row-->
+    <div class="container-fluid" id="page2">
+        <!--This is Row 1, Page 2-->
+        <div class="row row4">
+          <!--This is the first Input Card-->
+          <div class="col-4" id="page2Left">     
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Where would you like to travel?</h5>
+                <form>
+                  <div class="form-row">
+                    <div class="col-7 cityInput">
+                      <input type="text" class="form-control" placeholder="City">
+                    </div>
                   </div>
-                </div>
+                </form>
+                <a class="btn btn-primary" href="#" role="button">Submit</a>
+              </div>
             </div>
-              <div class="col-4"></div>
-              <div class="col-4"></div>
-            </div>
-
+          </div>
         </div>
+        <!--This is the second Input Card-->
+        <div class="col-4" id="page2Center"></div>
+        <!--This is the third Input Card-->
+        <div class="col-4" id="page2Right"></div>
+    </div>
+
+    <!--This is the Page 3 Container, with 1 row-->
+    <div class="container-fluid" id="page3">
+      <!--This is Row 1, Page 3-->
+      <div class="row row5">
+        <div class="col-12" id="page3Center"></div>
+      </div>
+    </div>
+
+    <!--This is the Page 4 Container, with 3 rows-->
+    <div class="container-fluid" id="page4">
+      <!--This is Row 1, Page 4-->
+      <div class="row row6">
+        <div class="col-12" id="page4Top"></div>
+      </div>
+      <!--This is Row 2, Page 4-->
+      <div class="row row7">
+        <div class="col-4" id="page4LeftTop"></div>
+        <div class="col-4" id="page4CenterTop"></div>
+        <div class="col-4" id="page4RightTop"></div>
+      </div>
+      <!--This is Row 3, Page 4-->
+      <div class="row row8">
+          <div class="col-4" id="page4LeftBottom"></div>
+          <div class="col-4" id="page4CenterBottom"></div>
+          <div class="col-4" id="page4RightBottom"></div>
+        </div>
+    </div>
       
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!--Javascript Resources for Here Maps API-->
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="UTF-8" src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+    
+    <!-- Javascript Libraries -->
+    <!-- jQuery, Popper.js, Bootstrap JS, Moment JS, D3 JS, Scroll Reveal JS -->
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
-    <script src="assets/javascript/app.js"><//script>
-
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!--Local Javascript Resource-->
+    <script src="../project-1-G2/assets/javascript/app.js"></script>
+
+    
   </body>
 </html>
