@@ -11,20 +11,15 @@
 </head>
 <body>
     
-    <input type="date" id="datePick">
-    <button  id="button1">Select a Start Date</button>
-    <br>
-    <input type="date" id="datePick2">
-    <button  id="button2">Select a End Date</button>
-    <br>
     <input type="text" id="searchBox">
-    <button  id="button3">Select a Place</button>
+    <button  id="button1">Select a Place</button>
     <br>
-    <button  id="button4">Get Weather</button>
+    <button  id="button2">Get Average Weather</button>
+    <br>
     <div id="weatherReport"></div>
     <br>
-    <button  id="button5">Get Weather2</button>
-    <div id="weatherReport2"></div>
+    
+   
 
 
 
@@ -34,57 +29,56 @@
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <!-- <script src="../javascript/weather_test.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
 
     <script>
         //API Key: 929d8637e5cb4a0b83bffcfc9128e8dd
 
+        //Define some variables to get started.
         var city = "",
-            date = "",
             apiKey = "929d8637e5cb4a0b83bffcfc9128e8dd",
-            date2 = ""
-
+            dateStart = "",
+            dateEnd = ""
+        
+        //When "Select a Place button is selected, store the text string as the city, and set the dates for today and tomorrow to use in the api call."
         $("#button1").click( function() {
-            date = $("#datePick").val()
-            console.log("date: " + date)
-        })
-
-        $("#button2").click( function() {
-            date2 = $("#datePick2").val()
-            console.log("date: " + date2)
-        })
-
-        $("#button3").click( function() {
             city = $("#searchBox").val().trim()
             console.log("city: " + city)
+            dateStart = moment().format("YYYY-MM-DD")
+            dateEnd = moment(dateStart, "YYYY-MM-DD").add(1, "days").format("YYYY-MM-DD")
+            console.log("search start date: " + dateStart)
+            console.log("search end date: " + dateEnd)
         })        
-
-        $("#button4").click( function() {
-            var queryURL = ("https://api.weatherbit.io/v2.0/history/daily?city=" + city + "&start_date=" + date + "&end_date=" + date + "&key=" + apiKey );
+        
+        //When "Get Average Weather" is clicked, run the api call and display the average temp, average hi, averge low, and average cloudiness.
+        $("#button2").click( function() {
+            var queryURL = ("https://api.weatherbit.io/v2.0/history/daily?city=" + city + "&start_date=" + dateStart + "&end_date=" + dateEnd + "&key=" + apiKey + "&units=I");
             
             console.log("query URL: " + queryURL)
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then( function(response) {
-                    var tempC = response.data[0].temp
-                    console.log("avg temp: " + tempC)
+                    var aveTemp = response.data[0].temp,
+                        minTemp = response.data[0].min_temp,
+                        maxTemp = response.data[0].max_temp,
+                        clouds = response.data[0].clouds
+                    console.log("avg temp: " + aveTemp)
+                    console.log("min temp: " + minTemp)
+                    console.log("max temp: " + maxTemp)
+                    console.log("cloud percent: " + clouds)
+
+                    $("#weatherReport").html(
+                        "<p>Usually, it is an average of " + aveTemp + "&#8457 today,</p>" +
+                        "<p>the average high is " + minTemp + "&#8457,</p>" +
+                        "<p>the average low is " + maxTemp + "&#8457,</p>" +
+                        "<p>and it is " + clouds + "% cloudy."
+                    )
                 })
         })
 
-        $("#button5").click( function() {
-            var queryURL2 = ("api.openweathermap.org/data/2.5/weather?q=" + city + "&appid==3ffc1c7fdf22f3e19d54c161f298bba5");
-            
-            console.log("query URL: " + queryURL2)
-            $.ajax({
-                url: queryURL2,
-                method: "GET"
-            }).then( function(response) {
-                    var tempC = response.main.temp
-                    console.log("avg temp: " + tempC)
-                })
-        })
-    
+
     </script>
 
 </body>
