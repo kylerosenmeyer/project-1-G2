@@ -9,12 +9,12 @@
     <!-- CSS Resources -->
     <link rel="stylesheet" type="text/css" href="../project-1-G2/assets/css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../project-1-G2/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="http://js.api.here.com/v3/3.0/mapsjs-ui.css">
+    <link rel="stylesheet" type="text/css" href="../project-1-G2/assets/css/style.css">
 
     <!--Font Resources-->
     <link rel="stylesheet" type="text/css" href="assets/HarabaraHand-font/stylesheet.css">
-    <link href="https://fonts.googleapis.com/css?family=Pompiere" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pompiere|Gloria+Hallelujah" rel="stylesheet">
 
     <!--Javascript Resources for Here Maps API (these are directed to be in the head tag)-->
     <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
@@ -59,8 +59,8 @@
         <div class="row row2">
           <div class="col-3" id="page1Left"></div>
             <div class="col-6" id="page1Center">
-              <h1>Welcome To Your Travel Planner!</h1>
-              <input type="text" class="form-control chalkboard" id="userIn" placeholder="Enter Username">
+              <h1>Have #NAME?  Let's Travel.</h1>
+              <input type="text" class="formInput" id="userIn" placeholder="Enter Username">
               <button type="submit" class="btn btn-primary" id="user-submit">Submit</button>
             </div>
             <div class="col-3" id="page1Right"></div>
@@ -76,50 +76,44 @@
         <!--This is Row 2, Page <i class="fa fa-hourglass-2" aria-hidden="true"></i>-->
         <div class="row row5">
           <!--This is the first Input Card-->
-          <div class="col-6" id="page2Left">     
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">First, Pick a City</h5>
-                <form>
-                  <div class="form-row">
-                    <div class="col-7">
-                      <input type="text" class="form-control" placeholder="City" id="cityIn">
-                    </div>
-                  </div>
-                </form>
-                <a class="btn btn-primary" href="#" role="button" id="citySubmit">Next</a>
-              </div>
-            </div>
+          <div class="col-6" id="page2Left">
+            <div class="card-body" >  
+              <h5 class="card-title">First, Pick a City</h5>
+              <form>
+                <div class="form-row">
+                    <input type="text" class="formInput" placeholder="Paris" id="cityIn">
+                </div>
+              </form>
+              <a class="btn btn-primary" href="#" role="button" id="citySubmit">Next</a>
+            </div>   
           </div>
           <!--This is the second Input Card-->
-          <div class="col-6" id="page2Center">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Now, Pick a Taste</h5>
-                  <ul>
-                    <li class="foodBtn" data-name="asian" id="food1"><button class="foodBtn">Asian</button></li>
-                    <li class="foodBtn" data-name="italian" id="food2"><button class="foodBtn">Italian</button></li>
-                    <li class="foodBtn" data-name="american" id="food3"><button class="foodBtn">American</button></li>
-                    <li class="foodBtn" data-name="bbq" id="food4"><button class="foodBtn">BBQ</button></li>
-                    <li class="foodBtn" data-name="beverages" id="food5"><button class="foodBtn">Beverages</button></li>
-                    <li class="foodBtn" data-name="french" id="food6"><button class="foodBtn">French</button></li>
-                    <li class="foodBtn" data-name="german" id="food7"><button class="foodBtn">German</button></li>
-                    <li class="foodBtn" data-name="healthy-food" id="food8"><button class="foodBtn">Healthy Food</button></li>
-                    <li class="foodBtn" data-name="indian" id="food9"><button class="foodBtn">Indian</button></li>
-                    <li class="foodBtn" data-name="mexian" id="food10"><button class="foodBtn">Mexican</button></li>
-                    <li class="foodBtn" data-name="mediterranean" id="food11"><button class="foodBtn">Mediterranean</button></li>
-                    <li class="foodBtn" data-name="seafood" id="food12"><button class="foodBtn">Seafood</button></li>
-                    <li class="foodBtn" data-name="vegetarian" id="food13"><button class="foodBtn">Vegetarian</button></li>
-                    <li class="foodBtn" data-name="vietnamese" id="food14"><button class="foodBtn">Vietnamese</button></li>
-                    <li class="foodBtn" data-name="chinese" id="food15"><button class="foodBtn">Chinese</button></li>
-                    <li class="foodBtn" data-name="japanese" id="food16"><button class="foodBtn">Japanse</button></li>
-                    <li class="foodBtn" data-name="thai" id="food17"><button class="foodBtn">Thai</button></li>
-                    <li class="foodBtn" data-name="middle-eastern" id="food18"><button class="foodBtn">Middle Eastern</button></li>
-                    <li class="foodBtn" data-name="irish" id="food19"><button class="foodBtn">Irish</button></li>
-                  </ul>
-                  <a class="btn btn-primary" href="#" role="button" id="foodSubmit">Next</a>
-                </div>
-              </div>
+          <div class="col-6" id="page2Right">
+            <div class="card-body">
+              <h5 class="card-title">Now, Pick a Taste</h5>
+              <ul>
+                <li class="foodBtn" data-name="asian" id="food1"><button class="foodBtn">Asian</button></li>
+                <li class="foodBtn" data-name="italian" id="food2"><button class="foodBtn">Italian</button></li>
+                <li class="foodBtn" data-name="american" id="food3"><button class="foodBtn">American</button></li>
+                <li class="foodBtn" data-name="bbq" id="food4"><button class="foodBtn">BBQ</button></li>
+                <li class="foodBtn" data-name="beverages" id="food5"><button class="foodBtn">Beverages</button></li>
+                <li class="foodBtn" data-name="french" id="food6"><button class="foodBtn">French</button></li>
+                <li class="foodBtn" data-name="german" id="food7"><button class="foodBtn">German</button></li>
+                <li class="foodBtn" data-name="healthy-food" id="food8"><button class="foodBtn">Healthy Food</button></li>
+                <li class="foodBtn" data-name="indian" id="food9"><button class="foodBtn">Indian</button></li>
+                <li class="foodBtn" data-name="mexian" id="food10"><button class="foodBtn">Mexican</button></li>
+                <li class="foodBtn" data-name="mediterranean" id="food11"><button class="foodBtn">Mediterranean</button></li>
+                <li class="foodBtn" data-name="seafood" id="food12"><button class="foodBtn">Seafood</button></li>
+                <li class="foodBtn" data-name="vegetarian" id="food13"><button class="foodBtn">Vegetarian</button></li>
+                <li class="foodBtn" data-name="vietnamese" id="food14"><button class="foodBtn">Vietnamese</button></li>
+                <li class="foodBtn" data-name="chinese" id="food15"><button class="foodBtn">Chinese</button></li>
+                <li class="foodBtn" data-name="japanese" id="food16"><button class="foodBtn">Japanse</button></li>
+                <li class="foodBtn" data-name="thai" id="food17"><button class="foodBtn">Thai</button></li>
+                <li class="foodBtn" data-name="middle-eastern" id="food18"><button class="foodBtn">Middle Eastern</button></li>
+                <li class="foodBtn" data-name="irish" id="food19"><button class="foodBtn">Irish</button></li>
+              </ul>
+              <a class="btn btn-primary" href="#" role="button" id="foodSubmit">Next</a>
+            </div>
           </div>
         </div>
         <div class="row row6"></div>
@@ -163,13 +157,14 @@
 
     
     <!-- Javascript Libraries -->
-    <!-- jQuery, Popper.js, Bootstrap JS, Moment JS, D3 JS -->
+    <!-- jQuery, Popper.js, Bootstrap JS, Moment JS, D3 JS, and Firebase -->
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 
     <!--Flight Widget Resource-->
     <script src="https://widgets.skyscanner.net/widget-server/js/loader.js"></script>
