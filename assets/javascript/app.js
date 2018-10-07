@@ -4,6 +4,17 @@
 //Zomato API Key: a187d16a240ba282ed1eb4dbc4f431c8
 //Weatherbit API Key: 929d8637e5cb4a0b83bffcfc9128e8dd
 
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyCrV2_SdRz9hU-1HoYHdYX7o0kaILlgE7A",
+    authDomain: "tilly-travel.firebaseapp.com",
+    databaseURL: "https://tilly-travel.firebaseio.com",
+    projectId: "tilly-travel",
+    storageBucket: "tilly-travel.appspot.com",
+    messagingSenderId: "1030289818810"
+};
+
+firebase.initializeApp(config);
 
 //Declare global variables to be used 
 var userName = "",
@@ -12,6 +23,8 @@ var userName = "",
     longitude = "",
     userArray = [],
     currentDate = "",
+    userObject = {},
+    database = firebase.database(),
 
     //variables for Maps API only
     map = "",
@@ -45,7 +58,7 @@ $("#citySubmit").click( function() {
 
     if ( $("#cityIn").val() !== "" ) {
         $("#citySubmit").off()
-        $("#page2Center").slideDown(1000)
+        $("#page2Right").slideDown(1000)
 
         //The first section of this code snippet gets the lat and long for the map API. 
 
@@ -87,14 +100,31 @@ $("#citySubmit").click( function() {
                     minTemp = response.data[0].min_temp,
                     maxTemp = response.data[0].max_temp,
                     clouds = response.data[0].clouds
-                console.log("avg temp: " + aveTemp)
-                console.log("min temp: " + minTemp)
-                console.log("max temp: " + maxTemp)
-                console.log("cloud percent: " + clouds)
+    
+                    console.log("avg temp: " + aveTemp)
+                    console.log("min temp: " + minTemp)
+                    console.log("max temp: " + maxTemp)
+                    console.log("cloud percent: " + clouds)
+        
 
-                userArray.push(city.searchText, latitude, longitude, aveTemp, minTemp, maxTemp, clouds)
-                console.log("userArray: " + userArray)
+                //This is the Third section of the code snippet, which gets the data for the local time.
+
+                var queryURL2 = ("https://api.weatherbit.io/v2.0/current?city=" + city.searchText + "&key=" + apiKey)
+
+                console.log("query URL2: " +queryURL2)
+                $.ajax({
+                    url: queryURL2,
+                    method: "GET"
+                }).then( function(response) {
+                    var dayNight = response.data[0].pod  
+                    console.log("Day or Night: " + dayNight)
+                    userArray.push(city.searchText, latitude, longitude, aveTemp, minTemp, maxTemp, clouds, dayNight)
+                    console.log("userArray: " + userArray)
+                })
             })
+
+        
+
 
     } else {
         console.log("error! Modal Incoming")
@@ -108,7 +138,8 @@ $("#citySubmit").click( function() {
 
 $(document).ready(function(){
     userArray = []
-    $("#page2, #page4, #page2Left, #page2Center, #page2Right, #page4LeftTop, #page4Center, #page4Right").slideUp(0)
+    userObject = {}
+    $("#page2, #page4, #page2Left, #page2Right, #page4LeftTop, #page4Center, #page4Right").slideUp(0)
     $("#page3").fadeOut(0)
 
 })
@@ -160,6 +191,40 @@ $(".foodBtn").click( function() {
 //The next event watches for the food section submit. *Draft Mode* THis event triggers the loading of the results page.
 
 $("#foodSubmit").click( function() {
+    currentDate = moment().format("LL")
+    userArray.push(foodSelection, currentDate)
+    console.log("userArray: " + userArray)
+
+    //Collect the userArray into an object and push to firebase
+
+    userObject = {
+        userName: userArray[0],
+        userCity: userArray[1],
+        cityLat: userArray[2],
+        cityLong: userArray[3],
+        aveTemp: userArray[4],
+        minTemp: userArray[5],
+        maxTemp: userArray[6],
+        clouds: userArray[7],
+        dayNight: userArray[8],
+        foodChoice: userArray[9],
+        currentDate: userArray[10]
+    }
+
+    console.log("user object check: " + userObject.userName)
+    console.log("user object check: " + userObject.userCity)
+    console.log("user object check: " + userObject.cityLat)
+    console.log("user object check: " + userObject.cityLong)
+    console.log("user object check: " + userObject.aveTemp)
+    console.log("user object check: " + userObject.minTemp)
+    console.log("user object check: " + userObject.maxTemp)
+    console.log("user object check: " + userObject.clouds)
+    console.log("user object check: " + userObject.dayNight)
+    console.log("user object check: " + userObject.foodChoice)
+    console.log("user object check: " + userObject.currentDate)
+
+
+    database.ref().push(userObject)
 
     if ( foodSelection !== "" ) {
 
@@ -185,22 +250,43 @@ $("#foodSubmit").click( function() {
                     restRating = response.restaurants[i].restaurant.user_rating.aggregate_rating,
                     restMenu = response.restaurants[i].restaurant.menu_url,
                     restDiv = $("<div id=\"resturantOption" + i + "\">"),
-                    restDivFilled = restDiv.html("<a class=\"restLink\" target=\"blank\" id=\"rest" + i + "\" href=\"" + restMenu + "\">" + restName + " Rating: " + restRating + " </a>")
+                    restDivFilled = restDiv.html("<button class=\"restLink\" target=\"blank\" id=\"rest" + i + "\" href=\"" + restMenu + "\">" + restName + " Rating: " + restRating + " </button>")
                 $("#page4Center").append(restDivFilled)
             }
 
         })
 
+        //Set the color of results page based on whether the city's local time is day or night.
+
+        if ( userArray[8] === "n" ) {
+            $("#page4").css({
+                "background-image": "linear-gradient(45deg,rgb(47, 71, 99),rgb(27, 51, 78))",
+                "color": "white"
+            })
+
+            $("button").css({
+                "color": "white",
+                "border": "2px solid rgb(255,255,255,0)"
+            })
+
+            $("button:hover").css({
+                "color": "white",
+                "border": "2px solid rgb(255,255,255,1)"
+            })
+        } 
+
         //This section updates the displays of all the content containers on the results page.
 
         $("#page2").slideUp(1000)
         $("#page4").slideDown(1000)
-        $("#page4Top").html("<h1>Welcome To " + userArray[1] + "!</h1>")
+        $("#page4Top").html("<h1 id=\"resultTitle\">Welcome To " + userArray[1] + "!</h1>")
         $("#page4LeftTop").delay(1000).slideDown(1000)
-        $("#page4Center").delay(1500).slideDown(1000)
+        $("#page4Center").delay(1500).slideDown(1500)
         $("#page4Right").delay(2000).slideDown(1000)
-        userArray.push(foodSelection)
-        console.log("userArray: " + userArray)  
+        
+        
+
+        
 
         // Display map using H.Map in the format of (element, maptype, options). This code comes partially from the api documentation.
         map = new H.Map(
@@ -227,10 +313,7 @@ $("#foodSubmit").click( function() {
             var behavior = new H.mapevents.Behavior(mapEvents);
             });
         
-        currentDate = moment().format("LL")
-        userArray.push(currentDate)
-        console.log("userArray: " + userArray)
-        
+            
         $("#page4LeftTop").html(
             "<p>Explore the City...</p>" +
             "<p class=\"weatherReport\">On " + currentDate + ", " +
