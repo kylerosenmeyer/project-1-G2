@@ -42,12 +42,12 @@ button:hover {
     text-align: center;
     padding: auto;
     margin: auto;
+    z-index: 0;
 }
 
 /*The row styling sets the heights of the rows, setting the grids on each page*/
 .row {
     height: 50%;
-    /* border: 1px dashed black; */
 }
 
 .row1, .row3 {
@@ -78,8 +78,17 @@ button:hover {
     height: 66.67%
 }
 
-.col-6, .col-3, .col-4 {
-    border: 1px dashed black;
+
+
+/*Background Globe*/
+#globe1, #globe2, #globe3 {
+    position: absolute;
+    font-size: 8000%;
+    top: 2%;
+    left: 2%;
+    opacity: 0;
+    z-index: 1;
+    color: rgb(255,255,255,0.2)
 }
 
 
@@ -92,13 +101,22 @@ button:hover {
 
 /*User Input Cards*/
 .card-body {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.75);
     box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
-    border: 5px ridge rgba(180, 172, 166,0.35);
+    border: 5px ridge rgba(120, 153, 130,0.35);
     border-radius: 15px;
     margin: 0 auto;
     width: 80%;
     height: 100%;
+    z-index: 2;
+}
+
+.card-title {
+    font-size: 2em;
+}
+
+#cityCardTitle {
+    margin-bottom: 20%;
 }
 
 .formInput {
@@ -147,6 +165,28 @@ li {
     display: inline-block;
 }
 
+.restLink {
+    text-decoration: none;
+    color: black;
+    border: 2px solid rgb(0,0,0,0);
+    padding: 1%;
+    margin-top: 4%;
+    font-size: 1.1em;
+}
+
+.restLink:hover {
+    text-decoration: none;
+    font-size: 1.3em;
+    color: black;
+    border: 2px solid rgb(0,0,0,1);
+
+}
+
+.foodBtn {
+    font-size: 1.2em;
+    z-index: 3;
+}
+
 /*ID Styling */
 
 /*These are the background colors used in the containers*/
@@ -187,6 +227,7 @@ li {
     box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
     border: 5px ridge rgba(180, 172, 166,0.35);
     border-radius: 15px;
+    z-index: 2;
 }
 
 #resultTitle {
@@ -208,20 +249,7 @@ li {
     width: 100%;
 }
 
-.restLink {
-    text-decoration: none;
-    color: black;
-    border: 2px solid rgb(0,0,0,0);
-    padding: 1%;
-    margin-top: 4%;
-}
 
-.restLink:hover {
-    text-decoration: none;
-    color: black;
-    border: 2px solid rgb(0,0,0,1);
-
-}
 
 /*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
 .fade.in {

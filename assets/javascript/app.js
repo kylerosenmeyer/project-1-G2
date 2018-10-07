@@ -4,6 +4,8 @@
 //Zomato API Key: a187d16a240ba282ed1eb4dbc4f431c8
 //Weatherbit API Key: 929d8637e5cb4a0b83bffcfc9128e8dd
 
+
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyCrV2_SdRz9hU-1HoYHdYX7o0kaILlgE7A",
@@ -58,7 +60,15 @@ $("#citySubmit").click( function() {
 
     if ( $("#cityIn").val() !== "" ) {
         $("#citySubmit").off()
-        $("#page2Right").slideDown(1000)
+        $("#page2Right").slideDown(2000)
+
+        $("#globe2").animate({
+            "opacity":"0"
+        }, 2000)
+
+        $("#globe3").animate({
+            "opacity": "0.8"
+        }, 2000)
 
         //The first section of this code snippet gets the lat and long for the map API. 
 
@@ -142,6 +152,30 @@ $(document).ready(function(){
     $("#page2, #page4, #page2Left, #page2Right, #page4LeftTop, #page4Center, #page4Right").slideUp(0)
     $("#page3").fadeOut(0)
 
+    if ( window.innerHeight > window.innerWidth) {
+        var totalWidth = window.innerWidth
+            globeTop = String(Math.floor(0.35*totalWidth) + "px")
+            globeLeft = String(Math.floor(0.05*totalWidth) + "px")
+            globeSize = String(Math.floor(0.93*totalWidth) + "px")
+        $("#globe1, #globe2, #globe3").animate({
+            "top": globeTop,
+            "left": globeLeft,
+            "font-size": globeSize,
+            "opacity": "0.8"
+        }, 2000)
+    } else {
+        var totalWidth = window.innerWidth
+            globeTop = String(Math.floor(0.001*totalWidth) + "px")
+            globeLeft = String(Math.floor(0.26*totalWidth) + "px")
+            globeSize = String(Math.floor(0.50*totalWidth) + "px")
+        $("#globe1, #globe2, #globe3").animate({
+            "top": globeTop,
+            "left": globeLeft,
+            "font-size": globeSize,
+            "opacity": "0.8"
+        }, 2000)
+    }
+
 })
 
 
@@ -154,7 +188,12 @@ var page1toPage2 = function () {
         userArray.push($("#userIn").val().trim())
         $("#page1").slideUp(1000)
         $("#page2, #page2Left").slideDown(1000)
-        console.log("userArray: " + userArray)        
+        console.log("userArray: " + userArray) 
+        $("#globe1").animate({
+            "opacity": "0"
+        }, 1000)
+        $("#globe3").css({"opacity":"0"})
+
     } else {
         console.log("error! Modal Incoming")
         //Display the modal warning the user that the train info is incomplete.
@@ -174,7 +213,7 @@ $("#page1").keyup(function(event){
     }
 })
 
-//The next 4 events watches for your food selection and applies some styling while changing the string stored in the food variable.
+//The next event watches for your food selection and applies some styling while changing the string stored in the food variable.
 $(".foodBtn").click( function() {
     foodSelection = $(this).attr("data-name")
     console.log("food: " + foodSelection)
@@ -245,7 +284,7 @@ $("#foodSubmit").click( function() {
 
             $("#page4Center").html("<p>Taste the Food...</p>")
 
-            for ( let i = 0; i<10; i++ ) {
+            for ( let i = 0; i<8; i++ ) {
                 var restName = response.restaurants[i].restaurant.name,
                     restRating = response.restaurants[i].restaurant.user_rating.aggregate_rating,
                     restMenu = response.restaurants[i].restaurant.menu_url,
