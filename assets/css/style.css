@@ -7,39 +7,32 @@ html, body {
     background-image: url("../images/brown_background.jpg")
 }
 
+/* Special CSS for Scroll Reveal */
+
+html.sr, .load-hidden {
+    visibility: hidden;
+}
+
 /* Font Styling */
 h1 {
     font-family: 'harabarahanditalic', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
     font-size: 3em;
-    box-shadow: 8px 8px 8px 8px rgb(0,0,0,0.7)
+    margin-top: 1%;
 }
        
 p {
 font-family: 'Pompiere', cursive;
 font-size: 3em;
+font-weight: bold;
 }
 
 /*Class Styling*/
 
-.chalkboard {
-    margin-top: 3%;
-    font-weight: bolder;
-    padding: 2%;
-    background-color: lightgrey;
-    border: 12px solid #c4a99a;
-    outline: 8px ridge black;
-    text-align: center;
-}
-
-.chalkboard:active {
-    font-weight: bolder;
-    padding: 2%;
-    background-color: lightgrey;
-    border: 12px solid #c4a99a;
-    outline: 8px ridge black;
-    text-align: center;
+.weatherReport {
+    padding: 3%;
+    font-size: 1.5em;
 }
 
 
@@ -65,8 +58,6 @@ color: black;
 padding: 2% 3%;
 border: 2px solid rgb(100, 100, 100, 1);
 outline: none;
-
-
 }
 
 .btn-primary:hover {
@@ -88,23 +79,41 @@ outline: none;
     margin: auto;
 }
 
-.row {
-    height: 50%;
-    border: 1px dashed black;
+ul {
+    list-style-type: none;
 }
 
-.first {
+li {
+    border: 2px solid rgb(0,0,0,0)
+}
+
+
+.row {
+    height: 50%;
+    /* border: 1px dashed black; */
+}
+
+.row1, .row3 {
+    height: 25%;
+    }
+
+.row4 {
     height: 100%
 }
 
+.row6 {
+    height: 20%;
+}
+
+.row7, .row8 {
+    height: 40%;
+}
 
 .col-6, .col-3, .col-4 {
     border: 1px dashed black;
 }
 
-.row1, .row3 {
-height: 25%;
-}
+
 
 .page-header {
 text-align: center;
@@ -136,4 +145,17 @@ background-color: red
 
 input.middle:focus {
     outline-width: 0;
+}
+
+/*Modal Styling Fix. I did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
+.fade.in {
+    opacity: 1;
+}
+.modal.in .modal-dialog {
+    -webkit-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+.modal-backdrop.in {
+    opacity: 0.5;
 }
