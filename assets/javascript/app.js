@@ -11,6 +11,7 @@ var userName = "",
     latitude = "",
     longitude = "",
     userArray = [],
+    currentDate = "",
 
     //variables for Maps API only
     map = "",
@@ -24,17 +25,6 @@ var userName = "",
 
     //variables for Zomato API only
     foodSelection = ""
-
-
-
-
-
-
-
-
-
-
-
 
     
 //This is the Javasript Section for the Here Maps API. Line 40 to 105.
@@ -112,22 +102,13 @@ $("#citySubmit").click( function() {
         $("#warningModal").modal("toggle")
     }
 
-
-
-
-
 });
 
 //This is the Javasript Section for all the click and key events in the app.
 
 $(document).ready(function(){
     userArray = []
-    // ScrollReveal().reveal("#page1Center", {
-    //     duration: 2000,
-    //     origin: "right",
-    //     reset: true
-    // })
-    $("#page2, #page2Left, #page2Center, #page2Right, #page4LeftTop, #page4CenterTop, #page4RightTop, #page4CenterBottom, #page4RightBottom").slideUp(0)
+    $("#page2, #page4, #page2Left, #page2Center, #page2Right, #page4LeftTop, #page4Center, #page4Right").slideUp(0)
     $("#page3").fadeOut(0)
 
 })
@@ -142,10 +123,6 @@ var page1toPage2 = function () {
         userArray.push($("#userIn").val().trim())
         $("#page1").slideUp(1000)
         $("#page2, #page2Left").slideDown(1000)
-        // ScrollReveal().reveal("#page2Left", {
-        //     duration: 1000,
-        //     origin: "top"
-        // })
         console.log("userArray: " + userArray)        
     } else {
         console.log("error! Modal Incoming")
@@ -167,35 +144,17 @@ $("#page1").keyup(function(event){
 })
 
 //The next 4 events watches for your food selection and applies some styling while changing the string stored in the food variable.
-$("#asian").click( function() {
-    foodSelection = "asian"
-    $("#asian").css("border", "2px solid rgb(0,0,0,1)")
-    $("#italian, #american, #bar-food").css("border", "2px solid rgb(0,0,0,0)")
+$(".foodBtn").click( function() {
+    foodSelection = $(this).attr("data-name")
     console.log("food: " + foodSelection)
-})
-
-$("#italian").click( function() {
-    foodSelection = "italian"
-    $("#italian").css("border", "2px solid rgb(0,0,0,1)")
-    $("#asian, #american, #bar-food").css("border", "2px solid rgb(0,0,0,0)")
-    console.log("food: " + foodSelection)
-
-})
-
-$("#american").click( function() {
-    foodSelection = "american"
-    $("#american").css("border", "2px solid rgb(0,0,0,1)")
-    $("#italian, #asian, #bar-food").css("border", "2px solid rgb(0,0,0,0)")
-    console.log("food: " + foodSelection)
-
-})
-
-$("#bar-food").click( function() {
-    foodSelection = "bar-food"
-    $("#bar-food").css("border", "2px solid rgb(0,0,0,1)")
-    $("#italian, #american, #asian").css("border", "2px solid rgb(0,0,0,0)")
-    console.log("food: " + foodSelection)
-
+    
+    for (let j=0; j<19; j++ ) {
+        if ( $("#food"+j).attr("data-name") === $(this).attr("data-name") ) {
+            $("#food"+j).css("border", "2px solid rgb(0,0,0,1)")
+        } else {
+            $("#food"+j).css("border", "2px solid rgb(0,0,0,0)")
+        }
+    }
 })
 
 //The next event watches for the food section submit. *Draft Mode* THis event triggers the loading of the results page.
@@ -219,39 +178,27 @@ $("#foodSubmit").click( function() {
             console.log("restuarant1 Rating: " + response.restaurants[0].restaurant.user_rating.aggregate_rating)
             console.log("restuarant1 Menu URL: " + response.restaurants[0].restaurant.menu_url)
 
-            for ( let i = 0; i<5; i++ ) {
-                var restName = response.restaurants[i].restaurant.name,
-                    restRating = response.restaurants[i].restaurant.user_rating.aggregate_rating,
-                    restMenu = response.restaurants[i].restaurant.menu_url,
-                    restDiv = $("<div id=\"resturantOption" + i + "\">"),
-                    restDivFilled = restDiv.html("<button id=\"rest" + i + "\" data-source=\"" + restMenu + "\">" + restName + " Rating: " + restRating + " </button>")
-                $("#page4CenterTop").append(restDivFilled)
-            }
+            $("#page4Center").html("<p>Taste the Food...</p>")
 
-            for ( let i = 5; i<10; i++ ) {
+            for ( let i = 0; i<10; i++ ) {
                 var restName = response.restaurants[i].restaurant.name,
                     restRating = response.restaurants[i].restaurant.user_rating.aggregate_rating,
                     restMenu = response.restaurants[i].restaurant.menu_url,
                     restDiv = $("<div id=\"resturantOption" + i + "\">"),
-                    restDivFilled = restDiv.html("<button id=\"rest" + i + "\" data-source=\"" + restMenu + "\">" + restName + " Rating: " + restRating + " </button>")
-                $("#page4CenterBottom").append(restDivFilled)
+                    restDivFilled = restDiv.html("<a class=\"restLink\" target=\"blank\" id=\"rest" + i + "\" href=\"" + restMenu + "\">" + restName + " Rating: " + restRating + " </a>")
+                $("#page4Center").append(restDivFilled)
             }
 
         })
-        
-        
 
-
+        //This section updates the displays of all the content containers on the results page.
 
         $("#page2").slideUp(1000)
-        // $("#page4").slideDown(1000)
+        $("#page4").slideDown(1000)
         $("#page4Top").html("<h1>Welcome To " + userArray[1] + "!</h1>")
         $("#page4LeftTop").delay(1000).slideDown(1000)
-        $("#page4CenterTop").delay(1500).slideDown(1000)
-        $("#page4RightTop").delay(2000).slideDown(1000)
-        // $("#page4LeftBottom").delay(2500).slideDown(1000)
-        $("#page4CenterBottom").delay(3000).slideDown(1000)
-        $("#page4RightBottom").delay(3500).slideDown(1000)
+        $("#page4Center").delay(1500).slideDown(1000)
+        $("#page4Right").delay(2000).slideDown(1000)
         userArray.push(foodSelection)
         console.log("userArray: " + userArray)  
 
@@ -263,7 +210,7 @@ $("#foodSubmit").click( function() {
             defaultLayers.terrain.map,
             //Map settings (default zoom level and lat-long from the geocode results)
             {   
-            zoom: 13,
+            zoom: 10,
             //This is the search location
             center: { lat: userArray[2], lng: userArray[3] }})
             console.log("Lat on map load: " + userArray[2])
@@ -277,14 +224,21 @@ $("#foodSubmit").click( function() {
             map.addEventListener('tap', function(evt) {
             // Log 'tap' and 'mouse' events:
             console.log(evt.type, evt.currentPointer.type); 
-            });
             var behavior = new H.mapevents.Behavior(mapEvents);
+            });
+        
+        currentDate = moment().format("LL")
+        userArray.push(currentDate)
+        console.log("userArray: " + userArray)
         
         $("#page4LeftTop").html(
-            "<p class=\"weatherReport\">Usually, it is an average of " + userArray[4] + "&#8457 today, " +
-            "the average high is " + userArray[5] + "&#8457, " +
-            "the average low is " + userArray[6] + "&#8457, " +
+            "<p>Explore the City...</p>" +
+            "<p class=\"weatherReport\">On " + currentDate + ", " +
+            "it is usually " + userArray[4] + "&#176. " +
+            "The average high is " + userArray[5] + "&#176, " +
+            "the average low is " + userArray[6] + "&#176, " +
             "and it is " + userArray[7] + "% cloudy.</p>"
+            
         )
     } else {
         console.log("error! Modal Incoming")
@@ -292,12 +246,8 @@ $("#foodSubmit").click( function() {
         $("#warningModal").modal("toggle")
     }
           
-
 })
     
-
-
-
 //This code snippet focuses onto the modal when it displays (taken from bootstrap documentation)
 $("#warningModal").on("shown.bs.modal", function () {
     $("#warningModal").trigger("focus")

@@ -4,7 +4,7 @@ html, body {
     height: 100%;
     padding:0;
     margin: 0;
-    background-image: url("../images/brown_background.jpg")
+    /* background-image: url("../images/brown_background.jpg") */
 }
 
 /* Special CSS for Scroll Reveal */
@@ -28,6 +28,15 @@ font-size: 3em;
 font-weight: bold;
 }
 
+button {
+    background-color: rgb(0,0,0,0);
+    border: 2px solid rgb(0,0,0,0);
+}
+
+button:hover {
+    font-weight: bold;
+}
+
 /*Class Styling*/
 
 .weatherReport {
@@ -35,18 +44,14 @@ font-weight: bold;
     font-size: 1.5em;
 }
 
-
-.card-deck {
-    background-color: red;
-    height: 800px;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    margin-right: 80px;
-    margin-left: 80px;
+.card-body {
+    height: 100%;
 }
 
-.card-body {
-    background-color: pink;
+.form-control {
+    text-align: center;
+    margin: auto;
+    width: 100%;
 }
 
 .btn-primary {
@@ -68,7 +73,7 @@ outline: none;
     outline: none;
     }
 
-.btn-primary:focus {
+button:focus, .btn-primary:focus {
    outline: none;
 }
 
@@ -84,10 +89,11 @@ ul {
 }
 
 li {
-    border: 2px solid rgb(0,0,0,0)
+    border: 2px solid rgb(0,0,0,0);
+    display: inline-block;
 }
 
-
+/*The row styling sets the heights of the rows, setting the grids on each page*/
 .row {
     height: 50%;
     /* border: 1px dashed black; */
@@ -97,16 +103,28 @@ li {
     height: 25%;
     }
 
-.row4 {
-    height: 100%
+.row5 {
+    height: 50%;
 }
 
-.row6 {
+.row4, .row6 {
+    height: 25%
+}
+
+.row8 {
     height: 20%;
 }
 
-.row7, .row8 {
-    height: 40%;
+.row9 {
+    height: 80%;
+}
+
+.row10 {
+   height: 33.33%;
+}
+
+.row11 {
+    height: 66.67%
 }
 
 .col-6, .col-3, .col-4 {
@@ -126,6 +144,10 @@ background-color: red
     height: 2em;
 }
 
+#cityIn {
+    width: 100%;
+}
+
 #userName {
     outline: none;
     border: none;
@@ -138,9 +160,24 @@ background-color: red
     border: none;
 }
 
-#userName:active {
+#userName:active, {
     outline: none;
     border:none;
+}
+
+.restLink {
+    text-decoration: none;
+    color: black;
+    border: 2px solid rgb(0,0,0,0);
+    padding: 1%;
+    margin-top: 4%;
+}
+
+.restLink:hover {
+    text-decoration: none;
+    color: black;
+    border: 2px solid rgb(0,0,0,1);
+
 }
 
 input.middle:focus {
