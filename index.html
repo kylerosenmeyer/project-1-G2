@@ -22,6 +22,7 @@
     <script src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="UTF-8" src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-pano.js" type="text/javascript" charset="utf-8"></script>
     
     <!--Javascript Library (Scroll Reveal must be in head)-->
     <!-- <script src="https://unpkg.com/scrollreveal"></script> -->
@@ -71,15 +72,17 @@
     <!--This is the Page 2 Container, with 1 row-->
     <div class="container-fluid" id="page2">
         <!--This is Row 1, Page 2-->
-        <div class="row row4">
+        <div class="row row4"></div>
+        <!--This is Row 2, Page <i class="fa fa-hourglass-2" aria-hidden="true"></i>-->
+        <div class="row row5">
           <!--This is the first Input Card-->
-          <div class="col-4" id="page2Left">     
+          <div class="col-6" id="page2Left">     
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">First, Pick a Place</h5>
+                <h5 class="card-title">First, Pick a City</h5>
                 <form>
                   <div class="form-row">
-                    <div class="col-7 cityInput">
+                    <div class="col-7">
                       <input type="text" class="form-control" placeholder="City" id="cityIn">
                     </div>
                   </div>
@@ -89,29 +92,43 @@
             </div>
           </div>
           <!--This is the second Input Card-->
-          <div class="col-4" id="page2Center">
+          <div class="col-6" id="page2Center">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Now, Pick a place to Eat</h5>
+                  <h5 class="card-title">Now, Pick a Taste</h5>
                   <ul>
-                    <li id="asian"><button class="foodBtn">Asian</button></li>
-                    <li id="italian"><button class="foodBtn">Italian</button></li>
-                    <li id="american"><button class="foodBtn">American</button></li>
-                    <li id="bar-food"><button class="foodBtn">Bar Food</button></li>
+                    <li class="foodBtn" data-name="asian" id="food1"><button class="foodBtn">Asian</button></li>
+                    <li class="foodBtn" data-name="italian" id="food2"><button class="foodBtn">Italian</button></li>
+                    <li class="foodBtn" data-name="american" id="food3"><button class="foodBtn">American</button></li>
+                    <li class="foodBtn" data-name="bbq" id="food4"><button class="foodBtn">BBQ</button></li>
+                    <li class="foodBtn" data-name="beverages" id="food5"><button class="foodBtn">Beverages</button></li>
+                    <li class="foodBtn" data-name="french" id="food6"><button class="foodBtn">French</button></li>
+                    <li class="foodBtn" data-name="german" id="food7"><button class="foodBtn">German</button></li>
+                    <li class="foodBtn" data-name="healthy-food" id="food8"><button class="foodBtn">Healthy Food</button></li>
+                    <li class="foodBtn" data-name="indian" id="food9"><button class="foodBtn">Indian</button></li>
+                    <li class="foodBtn" data-name="mexian" id="food10"><button class="foodBtn">Mexican</button></li>
+                    <li class="foodBtn" data-name="mediterranean" id="food11"><button class="foodBtn">Mediterranean</button></li>
+                    <li class="foodBtn" data-name="seafood" id="food12"><button class="foodBtn">Seafood</button></li>
+                    <li class="foodBtn" data-name="vegetarian" id="food13"><button class="foodBtn">Vegetarian</button></li>
+                    <li class="foodBtn" data-name="vietnamese" id="food14"><button class="foodBtn">Vietnamese</button></li>
+                    <li class="foodBtn" data-name="chinese" id="food15"><button class="foodBtn">Chinese</button></li>
+                    <li class="foodBtn" data-name="japanese" id="food16"><button class="foodBtn">Japanse</button></li>
+                    <li class="foodBtn" data-name="thai" id="food17"><button class="foodBtn">Thai</button></li>
+                    <li class="foodBtn" data-name="middle-eastern" id="food18"><button class="foodBtn">Middle Eastern</button></li>
+                    <li class="foodBtn" data-name="irish" id="food19"><button class="foodBtn">Irish</button></li>
                   </ul>
                   <a class="btn btn-primary" href="#" role="button" id="foodSubmit">Next</a>
                 </div>
               </div>
           </div>
-          <!--This is the third Input Card-->
-          <div class="col-4" id="page2Right"></div>
         </div>
+        <div class="row row6"></div>
     </div>
 
     <!--This is the Page 3 Container, with 1 row-->
     <div class="container-fluid" id="page3">
       <!--This is Row 1, Page 3-->
-      <div class="row row5">
+      <div class="row row7">
         <div class="col-12" id="page3Center"></div>
       </div>
     </div>
@@ -119,24 +136,28 @@
     <!--This is the Page 4 Container, with 3 rows-->
     <div class="container-fluid" id="page4">
       <!--This is Row 1, Page 4-->
-      <div class="row row6">
+      <div class="row row8">
         <div class="col-12" id="page4Top"></div>
       </div>
       <!--This is Row 2, Page 4-->
-      <div class="row row7">
-        <div class="col-4" id="page4LeftTop"></div>
-        <div class="col-4" id="page4CenterTop"></div>
-        <div class="col-4" id="page4RightTop">
+      <div class="row row9">
+        <div class="col-4">
+            <!--This is the sub row of column1 on Page 4-->
+            <div class="row row10">
+              <div class="col-12" id="page4LeftTop"></div>
+            </div>
+            <div class="row row11">
+              <div class="col-12" id="page4LeftBottom"></div>
+            </div>
+        </div>
+        <div class="col-4" id="page4Center"></div>
+        <div class="col-4" id="page4Right">
+          <p>Go There...</p>
           <!--This is the flight widget-->
           <div data-skyscanner-widget="SearchWidget"></div>
         </div>
       </div>
-      <!--This is Row 3, Page 4-->
-      <div class="row row8">
-          <div class="col-4" id="page4LeftBottom"></div>
-          <div class="col-4" id="page4CenterBottom"></div>
-          <div class="col-4" id="page4RightBottom">Right Bottom</div>
-        </div>
+      
     </div>
       
 
