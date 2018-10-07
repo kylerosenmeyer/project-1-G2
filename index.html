@@ -15,9 +15,40 @@
     <!--Font Resources-->
     <link rel="stylesheet" type="text/css" href="assets/HarabaraHand-font/stylesheet.css">
     <link href="https://fonts.googleapis.com/css?family=Pompiere" rel="stylesheet">
+
+    <!--Javascript Resources for Here Maps API (these are directed to be in the head tag)-->
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="UTF-8" src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+    
+    <!--Javascript Library (Scroll Reveal must be in head)-->
+    <!-- <script src="https://unpkg.com/scrollreveal"></script> -->
+
     
   </head>
   <body>
+
+    <!--This is the modal that pops if you don't fill out the form all the way-->
+    <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Wait!! Not Yet!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    You Are Not Ready To Move On.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--This is the Page 1 Container, with 3 rows-->
     <div class="container-fluid" id="page1">
@@ -27,7 +58,7 @@
         <div class="row row2">
           <div class="col-3" id="page1Left"></div>
             <div class="col-6" id="page1Center">
-              <h1 class="chalkboard">Welcome To Your Travel Planner!</h1>
+              <h1>Welcome To Your Travel Planner!</h1>
               <input type="text" class="form-control chalkboard" id="userIn" placeholder="Enter Username">
               <button type="submit" class="btn btn-primary" id="user-submit">Submit</button>
             </div>
@@ -45,23 +76,36 @@
           <div class="col-4" id="page2Left">     
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Where would you like to travel?</h5>
+                <h5 class="card-title">First, Pick a Place</h5>
                 <form>
                   <div class="form-row">
                     <div class="col-7 cityInput">
-                      <input type="text" class="form-control" placeholder="City">
+                      <input type="text" class="form-control" placeholder="City" id="cityIn">
                     </div>
                   </div>
                 </form>
-                <a class="btn btn-primary" href="#" role="button">Submit</a>
+                <a class="btn btn-primary" href="#" role="button" id="citySubmit">Next</a>
               </div>
             </div>
           </div>
+          <!--This is the second Input Card-->
+          <div class="col-4" id="page2Center">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Now, Pick a place to Eat</h5>
+                  <ul>
+                    <li id="asian"><button class="foodBtn">Asian</button></li>
+                    <li id="italian"><button class="foodBtn">Italian</button></li>
+                    <li id="american"><button class="foodBtn">American</button></li>
+                    <li id="bar-food"><button class="foodBtn">Bar Food</button></li>
+                  </ul>
+                  <a class="btn btn-primary" href="#" role="button" id="foodSubmit">Next</a>
+                </div>
+              </div>
+          </div>
+          <!--This is the third Input Card-->
+          <div class="col-4" id="page2Right"></div>
         </div>
-        <!--This is the second Input Card-->
-        <div class="col-4" id="page2Center"></div>
-        <!--This is the third Input Card-->
-        <div class="col-4" id="page2Right"></div>
     </div>
 
     <!--This is the Page 3 Container, with 1 row-->
@@ -82,32 +126,32 @@
       <div class="row row7">
         <div class="col-4" id="page4LeftTop"></div>
         <div class="col-4" id="page4CenterTop"></div>
-        <div class="col-4" id="page4RightTop"></div>
+        <div class="col-4" id="page4RightTop">
+          <!--This is the flight widget-->
+          <div data-skyscanner-widget="SearchWidget"></div>
+        </div>
       </div>
       <!--This is Row 3, Page 4-->
       <div class="row row8">
           <div class="col-4" id="page4LeftBottom"></div>
           <div class="col-4" id="page4CenterBottom"></div>
-          <div class="col-4" id="page4RightBottom"></div>
+          <div class="col-4" id="page4RightBottom">Right Bottom</div>
         </div>
     </div>
       
-    <!--Javascript Resources for Here Maps API-->
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" charset="UTF-8" src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+
     
     <!-- Javascript Libraries -->
-    <!-- jQuery, Popper.js, Bootstrap JS, Moment JS, D3 JS, Scroll Reveal JS -->
+    <!-- jQuery, Popper.js, Bootstrap JS, Moment JS, D3 JS -->
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!--Flight Widget Resource-->
+    <script src="https://widgets.skyscanner.net/widget-server/js/loader.js"></script>
 
     <!--Local Javascript Resource-->
     <script src="../project-1-G2/assets/javascript/app.js"></script>
