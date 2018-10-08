@@ -1,10 +1,6 @@
 //API Keys
-//Google Search API Key: AIzaSyDc8BAjqmHGQvYaYLW_bg_AxP986qIkdks
-//Hacker News API Key: cf8f9bf8ef354b0687c21810053ada1d
 //Zomato API Key: a187d16a240ba282ed1eb4dbc4f431c8
 //Weatherbit API Key: 929d8637e5cb4a0b83bffcfc9128e8dd
-
-
 
 // Initialize Firebase
 var config = {
@@ -41,110 +37,8 @@ var userName = "",
     //variables for Zomato API only
     foodSelection = ""
 
-    
-//This is the Javasript Section for the Here Maps API. Line 40 to 105.
 
-//Iniate the HERE Maps API by connecting to the service platform with the app id and app code. This code comes from the api documentation.
-var platform = new H.service.Platform({
-    'app_id': "qA8H4eSKAGPuJ30pTryC",
-    'app_code': "e7_nFDb6gHJ1Hvp40oOtSQ"
-
-});
-
-// call the default map layers from the API
-defaultLayers = platform.createDefaultLayers();
-
-
-// This click event gets the map data ready and the weather data ready. It is displayed when the final results page loads.
-$("#citySubmit").click( function() {
-
-    if ( $("#cityIn").val() !== "" ) {
-        $("#citySubmit").off()
-        $("#page2Right").slideDown(2000)
-
-        $("#globe2").animate({
-            "opacity":"0"
-        }, 2000)
-
-        $("#globe3").animate({
-            "opacity": "0.8"
-        }, 2000)
-
-        //The first section of this code snippet gets the lat and long for the map API. 
-
-        // Create the parameter for the geocoding request (this must be an object with property "searchText"):
-        city = {
-            searchText: document.getElementById("cityIn").value
-        };
-
-        //The mapDisplay function builds the map from the cooridates delivered by the API
-        var mapDisplay = function(result) {
-            latitude = result.Response.View[0].Result[0].Location.DisplayPosition.Latitude 
-            longitude = result.Response.View[0].Result[0].Location.DisplayPosition.Longitude
-            console.log("Lat: " + latitude)
-            console.log("Long: " + longitude)
-        }
-
-        //This calls the geocoding service from the API.
-        var geocoder = platform.getGeocodingService();
-        //This executes the converstion of the search term to lat-long, and makes the map display!
-        geocoder.geocode(city, mapDisplay, function(e) {
-        alert(e);
-        });
-
-        //This is the Second section of the code snippet, which gets the data for the average weather.
-
-        dateStart = moment().format("YYYY-MM-DD")
-        dateEnd = moment(dateStart, "YYYY-MM-DD").add(1, "days").format("YYYY-MM-DD")
-        console.log("search start date: " + dateStart)
-        console.log("search end date: " + dateEnd)
-
-        var queryURL = ("https://api.weatherbit.io/v2.0/history/daily?city=" + city.searchText + "&start_date=" + dateStart + "&end_date=" + dateEnd + "&key=" + apiKey + "&units=I");
-    
-        console.log("query URL: " + queryURL)
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then( function(response) {
-                var aveTemp = response.data[0].temp,
-                    minTemp = response.data[0].min_temp,
-                    maxTemp = response.data[0].max_temp,
-                    clouds = response.data[0].clouds
-    
-                    console.log("avg temp: " + aveTemp)
-                    console.log("min temp: " + minTemp)
-                    console.log("max temp: " + maxTemp)
-                    console.log("cloud percent: " + clouds)
-        
-
-                //This is the Third section of the code snippet, which gets the data for the local time.
-
-                var queryURL2 = ("https://api.weatherbit.io/v2.0/current?city=" + city.searchText + "&key=" + apiKey)
-
-                console.log("query URL2: " +queryURL2)
-                $.ajax({
-                    url: queryURL2,
-                    method: "GET"
-                }).then( function(response) {
-                    var dayNight = response.data[0].pod  
-                    console.log("Day or Night: " + dayNight)
-                    userArray.push(city.searchText, latitude, longitude, aveTemp, minTemp, maxTemp, clouds, dayNight)
-                    console.log("userArray: " + userArray)
-                })
-            })
-
-        
-
-
-    } else {
-        console.log("error! Modal Incoming")
-        //Display the modal warning the user that the train info is incomplete.
-        $("#warningModal").modal("toggle")
-    }
-
-});
-
-//This is the Javasript Section for all the click and key events in the app.
+//This is the docunent ready code section. The main action happening here is the setup of the subsequent pages, and the animation of the globes.
 
 $(document).ready(function(){
     userArray = []
@@ -177,12 +71,154 @@ $(document).ready(function(){
     }
 
 })
+//Iniate the HERE Maps API by connecting to the service platform with the app id and app code. This code comes from the api documentation.
+var platform = new H.service.Platform({
+    'app_id': "qA8H4eSKAGPuJ30pTryC",
+    'app_code': "e7_nFDb6gHJ1Hvp40oOtSQ"
 
+});
+
+// call the default map layers from the API
+defaultLayers = platform.createDefaultLayers();
+
+
+// This click event gets the map data ready and the weather data ready. It is displayed when the final results page loads.
+//A lot happens on the citySubmit. The city search value is used to generate lat, long, and all the weather data.
+$("#citySubmit").click( function() {
+
+    if ( $("#cityIn").val() !== "" ) {
+        
+        $("#citySubmit").off()
+        $("#page2Right").slideDown(2000)
+
+        $("#globe2").animate({
+            "opacity":"0"
+        }, 2000)
+
+        $("#globe3").animate({
+            "opacity": "0.8"
+        }, 2000)
+
+        //The first section of this code snippet gets the lat and long for the map API. 
+
+        // Create the parameter for the geocoding request (this must be an object with property "searchText"):
+        // Before setting the search parameter though, take the user text and transform it to capitalcase. 
+        //We do this by breaking the word down to it's character Codes and checking some conditions.
+        //First, get the value of the user's search, and create an empty array and variable.
+        var cityInput = $("#cityIn").val().trim(),
+            cityBreakdown = [],
+            citySearchRebuilt = "",
+            cityRebuilt = ""
+        //Break the search term down to it's character codes and push them to the empty array.
+        for ( let k=0; k<cityInput.length; k++ ) {
+            cityBreakdown.push( cityInput.charCodeAt(k) )
+        }
+        console.log("citybreakdown1: " + cityBreakdown)
+        //First convert all the codes to lower case.
+        for ( let m=0; m<cityBreakdown.length; m++ ) {
+            if ( ( cityBreakdown[m] > 64 ) && ( cityBreakdown[m] < 91 ) ) {
+                cityBreakdown[m] = ( cityBreakdown[m] + 32 )
+            }
+        }
+        console.log("citybreakdown2: " + cityBreakdown)
+        //Capitalize the first letter.
+        cityBreakdown[0] = ( cityBreakdown[0] - 32 )
+
+        //Check for spaces, and after any space, capitalize the next letter.
+        for ( let n=0; n<cityBreakdown.length; n++ ) {
+            if ( cityBreakdown[n] === 32 ) {
+                cityBreakdown[n+1] = ( cityBreakdown[n+1] - 32 )
+            }
+        }
+        //Rebuild the corrected character code array into a string.
+        for ( let p=0; p<cityBreakdown.length; p++ ) {
+
+            cityRebuilt += String.fromCharCode( cityBreakdown[p] )
+        }
+
+        //After the city name is rebuilt, rebuild the city search term with hyphens instead of spaces (if any)
+        for ( let q=0; q<cityBreakdown.length; q++ ) {
+            if ( cityBreakdown[q] === 32 ) {
+                cityBreakdown[q] = ( cityBreakdown[q] + 13 )
+            }
+            citySearchRebuilt += String.fromCharCode( cityBreakdown[q] )
+        }
+        //Put the rebuilt string into the search parameter. This will ensure consistency in searching API's and displaying results.
+        city = {
+            searchText: citySearchRebuilt
+        };
+
+        //The mapDisplay function builds the map from the cooridates delivered by the API
+        var mapDisplay = function(result) {
+            latitude = result.Response.View[0].Result[0].Location.DisplayPosition.Latitude 
+            longitude = result.Response.View[0].Result[0].Location.DisplayPosition.Longitude
+            console.log("Lat: " + latitude)
+            console.log("Long: " + longitude)
+        }
+
+        //This calls the geocoding service from the API.
+        var geocoder = platform.getGeocodingService();
+        //This executes the converstion of the search term to lat-long, and makes the map display!
+        geocoder.geocode(city, mapDisplay, function(e) {
+        alert(e);
+        });
+
+        //This is the Second section of the code snippet, which gets the data for the average weather.
+
+        dateStart = moment().format("YYYY-MM-DD")
+        dateEnd = moment(dateStart, "YYYY-MM-DD").add(1, "days").format("YYYY-MM-DD")
+        console.log("search start date: " + dateStart)
+        console.log("search end date: " + dateEnd)
+
+        //This is the search query for the Weatherbit API: Historical Weather Daily
+        var queryURL = ("https://api.weatherbit.io/v2.0/history/daily?city=" + city.searchText + "&start_date=" + dateStart + "&end_date=" + dateEnd + "&key=" + apiKey + "&units=I");
+    
+        console.log("query URL: " + queryURL)
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then( function(response) {
+                var aveTemp = response.data[0].temp,
+                    minTemp = response.data[0].min_temp,
+                    maxTemp = response.data[0].max_temp,
+                    clouds = response.data[0].clouds
+    
+                    console.log("avg temp: " + aveTemp)
+                    console.log("min temp: " + minTemp)
+                    console.log("max temp: " + maxTemp)
+                    console.log("cloud percent: " + clouds)
+        
+
+                //This is the Third section of the code snippet, which gets the data from the current weather api (weatherbit) for whether the city is in day or night.
+
+                var queryURL2 = ("https://api.weatherbit.io/v2.0/current?city=" + city.searchText + "&key=" + apiKey)
+
+                console.log("query URL2: " + queryURL2)
+                $.ajax({
+                    url: queryURL2,
+                    method: "GET"
+                }).then( function(response) {
+                    var dayNight = response.data[0].pod  
+                    console.log("Day or Night: " + dayNight)
+                    userArray.push(cityRebuilt, city.searchText, latitude, longitude, aveTemp, minTemp, maxTemp, clouds, dayNight)
+                    console.log("userArray: " + userArray)
+                })
+            })
+
+            //Pop up the modal if the user has not entered anything into the city search.
+    } else {
+        console.log("error! Modal Incoming")
+        //Display the modal warning the user that the train info is incomplete.
+        $("#warningModal").modal("toggle")
+    }
+
+});
 
 //The page1toPage2 function and the next two events watch for the user name submit. Submittal can come from pushing the submit button or pushing the enter key.
 
 var page1toPage2 = function () {
 
+    //If the user has entered anthying into the user name field
     if ( $("#userIn").val() !== "" ) {
 
         userArray.push($("#userIn").val().trim())
@@ -194,6 +230,7 @@ var page1toPage2 = function () {
         }, 1000)
         $("#globe3").css({"opacity":"0"})
 
+      //Else pop up the modal
     } else {
         console.log("error! Modal Incoming")
         //Display the modal warning the user that the train info is incomplete.
@@ -202,6 +239,8 @@ var page1toPage2 = function () {
     //Reset the text field
     $("#userIn").text("")
 }
+
+//The following click and keyup methods watch for the user to complete the first page, and then run the page1toPage2 transition.
 $("#user-submit").click(function(){
 
     page1toPage2()
@@ -239,19 +278,22 @@ $("#foodSubmit").click( function() {
     userObject = {
         userName: userArray[0],
         userCity: userArray[1],
-        cityLat: userArray[2],
-        cityLong: userArray[3],
-        aveTemp: userArray[4],
-        minTemp: userArray[5],
-        maxTemp: userArray[6],
-        clouds: userArray[7],
-        dayNight: userArray[8],
-        foodChoice: userArray[9],
-        currentDate: userArray[10]
+        cityQuery: userArray[2],
+        cityLat: userArray[3],
+        cityLong: userArray[4],
+        aveTemp: userArray[5],
+        minTemp: userArray[6],
+        maxTemp: userArray[7],
+        clouds: userArray[8],
+        dayNight: userArray[9],
+        foodChoice: userArray[10],
+        currentDate: userArray[11]
     }
 
+    //Console log the object for verification.
     console.log("user object check: " + userObject.userName)
     console.log("user object check: " + userObject.userCity)
+    console.log("user object check: " + userObject.cityQuery)
     console.log("user object check: " + userObject.cityLat)
     console.log("user object check: " + userObject.cityLong)
     console.log("user object check: " + userObject.aveTemp)
@@ -262,71 +304,81 @@ $("#foodSubmit").click( function() {
     console.log("user object check: " + userObject.foodChoice)
     console.log("user object check: " + userObject.currentDate)
 
-
+    //Put the userObejct into Firebase
     database.ref().push(userObject)
 
     if ( foodSelection !== "" ) {
-
-        //This is the Javasript Section for the Zomato API. Line 146 to.
 
         //This is the Ajax call for Zomato
         //On a click event, go get the list of Restaurants
             
         $.ajax({
-            url: ("https://developers.zomato.com/api/v2.1/search?q=restaurant&lat=" + userArray[2] + "&lon=" + userArray[3] + "&radius=16093.4&sort=rating&order=desc"),
+            url: ("https://developers.zomato.com/api/v2.1/search?q=restaurant&lat=" + userArray[3] + "&lon=" + userArray[4] + "&radius=16093.4&sort=rating&order=desc"),
             method: "GET",
             headers: {"user-key" : "a187d16a240ba282ed1eb4dbc4f431c8"}
+
         }).then( function(response) {
             console.log(response)
             console.log("restuarant1 Name: " + response.restaurants[0].restaurant.name)
             console.log("restuarant1 Rating: " + response.restaurants[0].restaurant.user_rating.aggregate_rating)
             console.log("restuarant1 Menu URL: " + response.restaurants[0].restaurant.menu_url)
+            
+            //Check the city location of the first restaurant from the search.
+            var cityCheck = response.restaurants[0].restaurant.location.city 
+            console.log("cityCheck: " + cityCheck)
 
-            $("#page4Center").html("<p>Taste the Food...</p>")
+            //If the API is not pulling restuarants from the same city that the user searched for, find out, and change the outcome of the restuarant search. 
+            if ( cityCheck === userArray[1] ) {
+                $("#page4Center").html("<p>Taste the Food...</p>")
 
-            for ( let i = 0; i<8; i++ ) {
-                var restName = response.restaurants[i].restaurant.name,
-                    restRating = response.restaurants[i].restaurant.user_rating.aggregate_rating,
-                    restMenu = response.restaurants[i].restaurant.menu_url,
-                    restDiv = $("<div id=\"resturantOption" + i + "\">"),
-                    restDivFilled = restDiv.html("<button class=\"restLink\" target=\"blank\" id=\"rest" + i + "\" href=\"" + restMenu + "\">" + restName + " Rating: " + restRating + " </button>")
-                $("#page4Center").append(restDivFilled)
+                //Grab the restaurant name, the aggregate rating, and the menu url, and then build a link/button for each restuarant and append it to the results page.
+                for ( let i = 0; i<8; i++ ) {
+                    var restName = response.restaurants[i].restaurant.name,
+                        restRating = response.restaurants[i].restaurant.user_rating.aggregate_rating,
+                        restMenu = response.restaurants[i].restaurant.menu_url,
+                        restDiv = $("<div id=\"resturantOption" + i + "\">"),
+                        restDivFilled = restDiv.html("<a href=\"" + restMenu + "\" target=\"blank\"><button class=\"restLink\" target=\"blank\" id=\"rest" + i + "\">" + restName + " Rating: " + restRating + " </button></a>")
+                    $("#page4Center").append(restDivFilled)
+
+
+                    //Set the color of results page based on whether the city's local time is day or night.
+
+                    if ( userArray[9] === "n" ) {
+                        $("#page4").css({
+                            "background-image": "linear-gradient(45deg,rgb(47, 71, 99),rgb(27, 51, 78))",
+                            "color": "white"
+                        })
+
+                        $(".restLink").removeClass("restLink").addClass("restLinkNight")
+
+                    } 
+                        }
+                
+            } else {
+                $("#page4Center").html("<p>Oops! Looks like we don't have restuarants in this location.</p>")
+
+                //Set the color of results page based on whether the city's local time is day or night.
+
+                if ( userArray[9] === "n" ) {
+                    $("#page4").css({
+                        "background-image": "linear-gradient(45deg,rgb(47, 71, 99),rgb(27, 51, 78))",
+                        "color": "white"
+                    })
+                } 
             }
+            
 
         })
-
-        //Set the color of results page based on whether the city's local time is day or night.
-
-        if ( userArray[8] === "n" ) {
-            $("#page4").css({
-                "background-image": "linear-gradient(45deg,rgb(47, 71, 99),rgb(27, 51, 78))",
-                "color": "white"
-            })
-
-            $("button").css({
-                "color": "white",
-                "border": "2px solid rgb(255,255,255,0)"
-            })
-
-            $("button:hover").css({
-                "color": "white",
-                "border": "2px solid rgb(255,255,255,1)"
-            })
-        } 
 
         //This section updates the displays of all the content containers on the results page.
 
         $("#page2").slideUp(1000)
         $("#page4").slideDown(1000)
-        $("#page4Top").html("<h1 id=\"resultTitle\">Welcome To " + userArray[1] + "!</h1>")
+        $("#page4Top").html("<h1 id=\"resultTitle\">Imagine a Day in " + userArray[1] + ".</h1>")
         $("#page4LeftTop").delay(1000).slideDown(1000)
         $("#page4Center").delay(1500).slideDown(1500)
         $("#page4Right").delay(2000).slideDown(1000)
         
-        
-
-        
-
         // Display map using H.Map in the format of (element, maptype, options). This code comes partially from the api documentation.
         map = new H.Map(
             //element (in vanilla JS only)
@@ -337,9 +389,9 @@ $("#foodSubmit").click( function() {
             {   
             zoom: 10,
             //This is the search location
-            center: { lat: userArray[2], lng: userArray[3] }})
-            console.log("Lat on map load: " + userArray[2])
-            console.log("Long on map load: " + userArray[3])
+            center: { lat: userArray[3], lng: userArray[4] }})
+            console.log("Lat on map load: " + userArray[3])
+            console.log("Long on map load: " + userArray[4])
 
             
             // This is the map events section (next 8 lines). This is pulled from the API documentation to make the map interactive.
@@ -352,14 +404,14 @@ $("#foodSubmit").click( function() {
             var behavior = new H.mapevents.Behavior(mapEvents);
             });
         
-            
+        //Place the weather data into paragraph form on the results page.
         $("#page4LeftTop").html(
             "<p>Explore the City...</p>" +
             "<p class=\"weatherReport\">On " + currentDate + ", " +
-            "it is usually " + userArray[4] + "&#176. " +
-            "The average high is " + userArray[5] + "&#176, " +
-            "the average low is " + userArray[6] + "&#176, " +
-            "and it is " + userArray[7] + "% cloudy.</p>"
+            "it is usually " + userArray[5] + "&#176. " +
+            "The average high is " + userArray[6] + "&#176, " +
+            "the average low is " + userArray[7] + "&#176, " +
+            "and it is " + userArray[8] + "% cloudy.</p>"
             
         )
     } else {
