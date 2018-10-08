@@ -13,6 +13,7 @@ var config = {
 };
 
 firebase.initializeApp(config);
+firebase.database.enableLogging(true);
 
 //Declare global variables to be used 
 var userName = "",
@@ -46,6 +47,7 @@ $(document).ready(function(){
     $("#page2, #page4, #page2Left, #page2Right, #page4LeftTop, #page4Center, #page4Right").slideUp(0)
     $("#page3").fadeOut(0)
 
+    //This conditional section changes the way the globes animate when they come in. Kind of like a media query. For now there are only two ways the globes come in, the desktop version and mobile version. But more mobile versions are probably necessary.
     if ( window.innerHeight > window.innerWidth) {
         var totalWidth = window.innerWidth
             globeTop = String(Math.floor(0.35*totalWidth) + "px")
@@ -80,6 +82,70 @@ var platform = new H.service.Platform({
 
 // call the default map layers from the API
 defaultLayers = platform.createDefaultLayers();
+
+
+//The page1toPage2 function and the next two events watch for the user name submit. Submittal can come from pushing the submit button or pushing the enter key.
+
+var page1toPage2 = function () {
+
+    //If the user has entered anthying into the user name field
+    if ( $("#userIn").val() !== "" ) {
+
+        userArray.push($("#userIn").val().trim())
+        $("#page1").slideUp(1000)
+        $("#page2, #page2Left").slideDown(1000)
+        console.log("userArray: " + userArray) 
+        $("#globe1").animate({
+            "opacity": "0"
+        }, 1000)
+        $("#globe3").css({"opacity":"0"})
+
+      //Else pop up the modal
+    } else {
+        console.log("error! Modal Incoming")
+        //Display the modal warning the user that the train info is incomplete.
+        $("#warningModal").modal("toggle")
+    }
+    //Reset the text field
+    $("#userIn").text("")
+}
+
+//The following click and keyup methods watch for the user to complete the first page, and then run the page1toPage2 transition.
+$("#user-submit").click(function(){
+
+    var userCheck = $("#userIn").val().trim()
+    console.log("userCheck: " + userCheck)
+    database.ref("users/" + userCheck).once("value").then( function(snap) {
+        var firebaseCheck = snap.userName.val()
+        console.log("firebaseCheck: " + firebaseCheck)
+
+        if ( firebaseCheck === userCheck ) {
+
+            //Jump back to the results page
+    
+            $("#page2").slideUp(1000)
+            $("#page4").slideDown(1000)
+            $("#page4Top").html("<h1 id=\"resultTitle\">Imagine a Day in " + userArray[1] + ".</h1>")
+            $("#page4LeftTop").delay(1000).slideDown(1000)
+            $("#page4Center").delay(1500).slideDown(1500)
+            $("#page4Right").delay(2000).slideDown(1000)
+    
+        } else {
+            //Continue to page 2
+            page1toPage2()
+            console.log(database.ref().child("userName").toString())
+        }
+    })
+    
+    
+    
+})
+$("#page1").keyup(function(event){
+
+    if( event.keyCode === 13 ) {
+        page1toPage2()
+    }
+})
 
 
 // This click event gets the map data ready and the weather data ready. It is displayed when the final results page loads.
@@ -214,43 +280,7 @@ $("#citySubmit").click( function() {
 
 });
 
-//The page1toPage2 function and the next two events watch for the user name submit. Submittal can come from pushing the submit button or pushing the enter key.
 
-var page1toPage2 = function () {
-
-    //If the user has entered anthying into the user name field
-    if ( $("#userIn").val() !== "" ) {
-
-        userArray.push($("#userIn").val().trim())
-        $("#page1").slideUp(1000)
-        $("#page2, #page2Left").slideDown(1000)
-        console.log("userArray: " + userArray) 
-        $("#globe1").animate({
-            "opacity": "0"
-        }, 1000)
-        $("#globe3").css({"opacity":"0"})
-
-      //Else pop up the modal
-    } else {
-        console.log("error! Modal Incoming")
-        //Display the modal warning the user that the train info is incomplete.
-        $("#warningModal").modal("toggle")
-    }
-    //Reset the text field
-    $("#userIn").text("")
-}
-
-//The following click and keyup methods watch for the user to complete the first page, and then run the page1toPage2 transition.
-$("#user-submit").click(function(){
-
-    page1toPage2()
-})
-$("#page1").keyup(function(event){
-
-    if( event.keyCode === 13 ) {
-        page1toPage2()
-    }
-})
 
 //The next event watches for your food selection and applies some styling while changing the string stored in the food variable.
 $(".foodBtn").click( function() {
@@ -273,9 +303,8 @@ $("#foodSubmit").click( function() {
     userArray.push(foodSelection, currentDate)
     console.log("userArray: " + userArray)
 
-    //Collect the userArray into an object and push to firebase
-
-    userObject = {
+    //Put the userObejct into Firebase
+    database.ref("users/" + userArray[0]).set({
         userName: userArray[0],
         userCity: userArray[1],
         cityQuery: userArray[2],
@@ -288,24 +317,7 @@ $("#foodSubmit").click( function() {
         dayNight: userArray[9],
         foodChoice: userArray[10],
         currentDate: userArray[11]
-    }
-
-    //Console log the object for verification.
-    console.log("user object check: " + userObject.userName)
-    console.log("user object check: " + userObject.userCity)
-    console.log("user object check: " + userObject.cityQuery)
-    console.log("user object check: " + userObject.cityLat)
-    console.log("user object check: " + userObject.cityLong)
-    console.log("user object check: " + userObject.aveTemp)
-    console.log("user object check: " + userObject.minTemp)
-    console.log("user object check: " + userObject.maxTemp)
-    console.log("user object check: " + userObject.clouds)
-    console.log("user object check: " + userObject.dayNight)
-    console.log("user object check: " + userObject.foodChoice)
-    console.log("user object check: " + userObject.currentDate)
-
-    //Put the userObejct into Firebase
-    database.ref().push(userObject)
+    })
 
     if ( foodSelection !== "" ) {
 
