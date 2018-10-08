@@ -67,9 +67,8 @@
         <div class="col-3" id="page1Left"></div>
           <div class="col-6" id="page1Center">
             <h1>Have #NAME?  Let's Travel.</h1>
-
             <input type="text" class="formInput" id="userIn" placeholder="Enter Username">
-            <button type="submit" class="btn btn-primary" id="user-submit">Submit</button>
+            <button type="submit" class="btn primaryBtn" id="user-submit">Let's Go</button>
           </div>
           <div class="col-3" id="page1Right"></div>
       </div>
@@ -92,20 +91,22 @@
           <!--This is the first Input Card-->
           <div class="col-6" id="page2Left">
             <div class="card-body" >  
-              <h5 class="card-title" id="cityCardTitle">First, Pick a City</h5>
+              <h5 class="card-title" >First, Pick a City</h5>
+              <i class="fas fa-city cityIcon"></i>
               <form>
                 <div class="form-row">
                     <input type="text" class="formInput" placeholder="Paris" id="cityIn">
                 </div>
               </form>
-              <a class="btn btn-primary" href="#" role="button" id="citySubmit">Next</a>
+              <a class="btn primaryBtn" href="#" role="button" id="citySubmit">Next</a>
             </div>   
           </div>
           <!--This is the second Input Card-->
           <div class="col-6" id="page2Right">
             <div class="card-body">
-              <h5 class="card-title">Now, Pick a Taste</h5>
+              <h5 class="card-title">Now, Pick a Taste  <i class="fas fa-utensils foodIcon"></i></h5>
               <ul>
+                <!--These are the food buttons. They are hard coded now, but should be dynamically created from the actuall cuisines avialable from search.-->
                 <li class="foodBtn" data-name="asian" id="food1"><button class="foodBtn">Asian</button></li>
                 <li class="foodBtn" data-name="italian" id="food2"><button class="foodBtn">Italian</button></li>
                 <li class="foodBtn" data-name="american" id="food3"><button class="foodBtn">American</button></li>
@@ -126,7 +127,7 @@
                 <li class="foodBtn" data-name="middle-eastern" id="food18"><button class="foodBtn">Middle Eastern</button></li>
                 <li class="foodBtn" data-name="irish" id="food19"><button class="foodBtn">Irish</button></li>
               </ul>
-              <a class="btn btn-primary" href="#" role="button" id="foodSubmit">Next</a>
+              <a class="btn primaryBtn" href="#" role="button" id="foodSubmit">Next</a>
             </div>
           </div>
         </div>
@@ -161,7 +162,7 @@
         <div class="col-4" id="page4Center"></div>
         <div class="col-4" id="page4Right">
           <p>Go There...</p>
-          <!--This is the flight widget-->
+          <!--This is the vacation widget from Expedia-->
           <div id="searchWidget" style="width:100%;height:92%;"><iframe id="widgetIframe" src="https://www.expedia.com/marketing/widgets/searchform/widget?wtt=1&tp1=5164949&tp2=&lob=H,FH,F&des=&wbi=13&olc=FFFFFF&whf=4&hfc=C7C7C7&wif=4&ifc=000000&wbc=FFCB00&wbf=4&bfc=3D3100&wws=1&sfs=H100RW80R" width="100%" height="92%" scrolling="no" frameborder="0"></iframe></div>        </div>
       </div>
       
@@ -178,10 +179,6 @@
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
-
-
-    <!--Flight Widget Resource-->
-    <script src="https://widgets.skyscanner.net/widget-server/js/loader.js"></script>
 
     <!--Local Javascript Resource-->
     <script src="../project-1-G2/assets/javascript/app.js"></script>

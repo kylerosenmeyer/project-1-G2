@@ -16,6 +16,10 @@ h1 {
     font-size: 3em;
     margin: 3% 0% 3%;
 }
+
+h5 {
+    font-family: 'Gloria Hallelujah', cursive;
+}
        
 p {
 font-family: 'Pompiere', cursive;
@@ -78,8 +82,6 @@ button:hover {
     height: 66.67%
 }
 
-
-
 /*Background Globe*/
 #globe1, #globe2, #globe3 {
     position: absolute;
@@ -88,7 +90,12 @@ button:hover {
     left: 2%;
     opacity: 0;
     z-index: 1;
-    color: rgb(255,255,255,0.2)
+    color: rgb(255,255,255,0.2);
+    pointer-events: none; 
+}
+/*Background Globe*/
+.backgroundGlobe {
+    z-index: 1;
 }
 
 
@@ -101,7 +108,7 @@ button:hover {
 
 /*User Input Cards*/
 .card-body {
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
     border: 5px ridge rgba(120, 153, 130,0.35);
     border-radius: 15px;
@@ -111,14 +118,25 @@ button:hover {
     z-index: 2;
 }
 
+/*Icon Styling*/
+.cityIcon {
+    font-size: 3em;
+    margin: 5%;
+    opacity: 0.8
+}
+
+.foodIcon {
+    font-size: 1em;
+    margin: 1%;
+    opacity: 0.8
+}
+
+/*Title text on the cards*/
 .card-title {
     font-size: 2em;
 }
 
-#cityCardTitle {
-    margin-bottom: 20%;
-}
-
+/*This the class for the text input fields.*/
 .formInput {
     text-align: center;
     margin: auto;
@@ -126,7 +144,9 @@ button:hover {
     border: 2px solid rgb(0,0,0,0);
     border-bottom: 2px solid rgb(0,0,0,1);
     outline: none;
-    background-color: rgb(0,0,0,0)
+    background-color: rgb(0,0,0,0);
+    font-family: 'Pompiere', cursive;
+    font-size: 1.8em;
 }
 
 .formInput:focus, input:focus {
@@ -135,36 +155,56 @@ button:hover {
     outline: none;
 }
 
-.btn-primary {
+form {
+    z-index: 2;
+}
+
+/*Button Styling - this the class for the next buttons*/
+.primaryBtn {
     margin-top: 3%;
     background-color: rgb(100, 100, 100, 0);
     color: black;
     padding: 2% 6%;
     border: 2px solid rgb(100, 100, 100, 1);
     outline: none;
+    font-size: 1.5em;
+    font-family: 'Pompiere', cursive;
 }
 
-.btn-primary:hover {
+.primaryBtn:hover {
     text-decoration: none;
     color: white;
     border: 2px solid rgb(100, 100, 100, 0);
-    background-color: rgb(100, 100, 100, 1);
     outline: none;
+    background-image: linear-gradient(45deg,rgba(120, 153, 130,1),rgb(102, 117, 134, 1));
+    animation-name: BackgroundAnimator;
+    animation-duration: 1s;
+    animation-iteration-count: infinite
 }
 
-button:focus, .btn-primary:focus {
+button:focus, .primaryBtn:focus, button:active, .primaryBtn:active, button:visited, .primaryBtn:visited {
    outline: none;
+   background-color: rgb(100, 100, 100, 0)
 }
 
+/*This is the styling for the food buttons*/
 ul {
     list-style-type: none;
+    z-index: 2;
 }
-
+/*This is the styling for the food buttons*/
 li {
     border: 2px solid rgb(0,0,0,0);
     display: inline-block;
 }
 
+/*This is the styling for the food buttons*/
+.foodBtn {
+    font-size: 1.2em;
+    z-index: 3;
+}
+
+/*This is the styling for the restuarant results*/
 .restLink {
     text-decoration: none;
     color: black;
@@ -173,19 +213,48 @@ li {
     margin-top: 4%;
     font-size: 1.1em;
 }
-
+/*This is the styling for the restuarant results*/
+.restLinkNight {
+    text-decoration: none;
+    color: white;
+    border: 2px solid rgb(255,255,255,0);
+    padding: 1%;
+    margin-top: 4%;
+    font-size: 1.1em;
+}
+/*This is the styling for the restuarant results*/
 .restLink:hover {
     text-decoration: none;
-    font-size: 1.3em;
-    color: black;
-    border: 2px solid rgb(0,0,0,1);
-
+    animation-name: linkHoverDay;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+/*This is the styling for the restuarant results*/
+.restLinkNight:hover {
+    text-decoration: none;
+    animation-name: linkHoverNight;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+/*This is the styling for the restuarant results*/
+@keyframes linkHoverDay {
+    0% { font-size: 1.1em;
+         border: 2px solid rgb(0,0,0,0);
+         color: black}
+    100% {font-size: 1.5em;
+          border: 2px solid rgb(0,0,0,1);
+          color: black;}
+}
+/*This is the styling for the restuarant results*/
+@keyframes linkHoverNight {
+    0% { font-size: 1.1em;
+         border: 2px solid rgb(255,255,255,0);
+         color: white}
+    100% {font-size: 1.5em;
+          border: 2px solid rgb(255,255,255,1);
+          color: white;}
 }
 
-.foodBtn {
-    font-size: 1.2em;
-    z-index: 3;
-}
 
 /*ID Styling */
 
@@ -230,23 +299,22 @@ li {
     z-index: 2;
 }
 
+/*This is the styling for results page title text*/
 #resultTitle {
     margin-bottom: 0;
 }
 
-#resultSubTitle {
-    font-size: 1em;
-}
-
-
+/*This is extra styling for the username input field*/
 #userIn {
     margin-top: 5%;
     height: 2em;
 
 }
 
+/*This is extra styling for the city name input field*/
 #cityIn {
-    width: 100%;
+    width: 50%;
+    text-transform: capitalize;
 }
 
 
