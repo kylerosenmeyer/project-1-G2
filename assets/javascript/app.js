@@ -113,32 +113,34 @@ var page1toPage2 = function () {
 //The following click and keyup methods watch for the user to complete the first page, and then run the page1toPage2 transition.
 $("#user-submit").click(function(){
 
-    var userCheck = $("#userIn").val().trim()
-    console.log("userCheck: " + userCheck)
-    database.ref("users/" + userCheck).once("value").then( function(snap) {
-        var firebaseCheck = snap.userName.val()
-        console.log("firebaseCheck: " + firebaseCheck)
+    var userCheck = $("#userIn").val().trim(),
+        //This pulls the child "userName" from the parent "userCheck" if it exists
+        firebasePath = database.ref("users/" + userCheck + "/userName")
 
-        if ( firebaseCheck === userCheck ) {
+        //And this grabs the value of that child.
+        firebasePath.on("value", function(snap) {
+            var firebaseCheck = snap.val()
 
-            //Jump back to the results page
-    
-            $("#page2").slideUp(1000)
-            $("#page4").slideDown(1000)
-            $("#page4Top").html("<h1 id=\"resultTitle\">Imagine a Day in " + userArray[1] + ".</h1>")
-            $("#page4LeftTop").delay(1000).slideDown(1000)
-            $("#page4Center").delay(1500).slideDown(1500)
-            $("#page4Right").delay(2000).slideDown(1000)
-    
-        } else {
-            //Continue to page 2
-            page1toPage2()
-            console.log(database.ref().child("userName").toString())
-        }
-    })
-    
-    
-    
+            //Log the conditions to verify they were built correctly.
+            console.log("userCheck: " + userCheck)
+            console.log("firebaseCheck: " + firebaseCheck)
+
+            //And now check the condition.
+            if ( firebaseCheck == userCheck ) {
+
+                //Jump back to the results page
+                $("#page2, #page2").slideUp(1000)
+                $("#page4").slideDown(1000)
+                $("#page4Top").html("<h1 id=\"resultTitle\">Imagine a Day in " + userArray[1] + ".</h1>")
+                $("#page4LeftTop").delay(1000).slideDown(1000)
+                $("#page4Center").delay(1500).slideDown(1500)
+                $("#page4Right").delay(2000).slideDown(1000)
+        
+            } else {
+                //Continue to page 2
+                page1toPage2()
+            }
+        })
 })
 $("#page1").keyup(function(event){
 
