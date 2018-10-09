@@ -30,6 +30,7 @@ var userName = "",
     map = "",
     platform = "",
     defaultLayers = "",
+    mapDisplay = "",
 
     //variables for Weather API only
     dateStart = "",
@@ -102,7 +103,7 @@ var page1toPage2 = function () {
 
             //And now check the condition.
             if ( firebaseCheck == userName ) {
-                //This is a bug. Do not call buildResults on this condition. need alternative.
+            //This is a bug. Do not call buildResults on this condition. need alternative.
             //    buildResults()
 
             } else {
@@ -257,17 +258,14 @@ var buildResults = function() {
 
     //declare variables to pull data from user's info
 
-    var userNamepath = database.ref("users/" + userName + "/userName"),
-        userCitypath = database.ref("users/" + userName + "/userCity"),
+    var userCitypath = database.ref("users/" + userName + "/userCity"),
         userQuerypath = database.ref("users/" + userName + "/cityQuery"),
         userFoodpath = database.ref("users/" + userName + "/foodChoice"),
-        pulluserName = "",
         pulluserCity = "",
         pullcityQuery = "",
         pullfoodChoice = "",
         currentDate = moment().format("LL")
 
-        userNamepath.on( "value", function(snap) { pulluserName = snap.val() } )
         userCitypath.on( "value", function(snap) { pulluserCity = snap.val() } )
         userQuerypath.on( "value", function(snap) { pullcityQuery = snap.val() } )
         userFoodpath.on( "value", function(snap) { pullfoodChoice = snap.val() } )
@@ -283,12 +281,14 @@ var buildResults = function() {
     defaultLayers = platform.createDefaultLayers();
 
     //The mapDisplay function builds the map from the cooridates delivered by the API
-    var mapDisplay = function(result) {
+    mapDisplay = function(result) {
         latitude = result.Response.View[0].Result[0].Location.DisplayPosition.Latitude 
         longitude = result.Response.View[0].Result[0].Location.DisplayPosition.Longitude
-        console.log("Lat: " + latitude)
-        console.log("Long: " + longitude)
         coordinates.push(latitude, longitude)
+        console.log("Lat check1: " + latitude)
+        console.log("Long check1: " + longitude)
+        console.log("coordinate check1: " + coordinates)
+        
         // Display map using H.Map in the format of (element, maptype, options). This code comes partially from the api documentation.
         
         map = new H.Map(
@@ -298,7 +298,7 @@ var buildResults = function() {
             defaultLayers.terrain.map,
             //Map settings (default zoom level and lat-long from the geocode results)
             {   
-            zoom: 9,
+            zoom: 8,
             //This is the search location
             center: { lat: coordinates[0], lng: coordinates[1] }})
             console.log("Lat on map load: " + coordinates[0])
@@ -316,8 +316,6 @@ var buildResults = function() {
 
         })
     }
-
-
     
     //Put the rebuilt city string into the search parameter. This will ensure consistency in searching API's and displaying results.
     city = {
@@ -370,14 +368,16 @@ var buildResults = function() {
         }).then( function(response) {
             var dayNight = response.data[0].pod  
             console.log("Day or Night: " + dayNight)
-
+            //Set the color of results page based on whether the city's local time is day or night.
             if ( dayNight === "n" ) {
-                $("#page4").css({
+                $("#page4, .row9, .row10, .row11, .row12").css({
                     "background-image": "linear-gradient(45deg,rgb(47, 71, 99),rgb(27, 51, 78))",
                     "color": "white"
                 })
-
-                $(".restLink").removeClass("restLink").addClass("restLinkNight")
+                setTimeout( function() {
+                    $(".restLink").removeClass("restLink").addClass("restLinkNight")
+                },5000)
+                
 
             } 
         })
@@ -396,49 +396,51 @@ var buildResults = function() {
 
     //This is the Ajax call for Zomato
     //On a click event, go get the list of Restaurants
-    
-    $.ajax({
-        url: ("https://developers.zomato.com/api/v2.1/search?q=restaurant&lat=" + coordinates[0] + "&lon=" + coordinates[1] + "&radius=16093.4&sort=rating&order=desc"),
-        method: "GET",
-        headers: {"user-key" : "a187d16a240ba282ed1eb4dbc4f431c8"},
-        beforeSend: function() {
-            setTimeout(2000)
-        }
+    setTimeout( function() {
         
-    }).then( function(response) {
-        console.log(response)
-        console.log("restuarant1 Name: " + response.restaurants[0].restaurant.name)
-        console.log("restuarant1 Rating: " + response.restaurants[0].restaurant.user_rating.aggregate_rating)
-        console.log("restuarant1 Menu URL: " + response.restaurants[0].restaurant.menu_url)
-        
-        //Check the city location of the first restaurant from the search.
-        var cityCheck = response.restaurants[0].restaurant.location.city 
-        console.log("cityCheck: " + cityCheck)
-
-        //If the API is not pulling restuarants from the same city that the user searched for, find out, and change the outcome of the restuarant search. 
-        if ( cityCheck === pulluserCity ) {
-            $("#page4food").html("<p>Taste the Food...</p>")
-
-            //Grab the restaurant name, the aggregate rating, and the menu url, and then build a link/button for each restuarant and append it to the results page.
-            for ( let i = 0; i<8; i++ ) {
-                var restName = response.restaurants[i].restaurant.name,
-                    restRating = response.restaurants[i].restaurant.user_rating.aggregate_rating,
-                    restMenu = response.restaurants[i].restaurant.menu_url,
-                    restDiv = $("<div id=\"resturantOption" + i + "\">"),
-                    restDivFilled = restDiv.html("<a href=\"" + restMenu + "\" target=\"blank\"><button class=\"restLink\" target=\"blank\" id=\"rest" + i + "\">" + restName + " Rating: " + restRating + " </button></a>")
-                $("#page4food").append(restDivFilled)
-
-
-            //Set the color of results page based on whether the city's local time is day or night.
-
-            }
+        $.ajax({
+            url: ("https://developers.zomato.com/api/v2.1/search?q=restaurant&lat=" + coordinates[0] + "&lon=" + coordinates[1] + "&radius=16093.4&sort=rating&order=desc"),
+            method: "GET",
+            headers: {"user-key" : "a187d16a240ba282ed1eb4dbc4f431c8"},
             
-        } else {
-            $("#page4food").html("<p>Oops! Looks like we don't have restuarants in this location.</p>")
+        }).then( function(response) {
+            console.log("coordinates triple check: ")
+            console.log(coordinates[0], coordinates[1])
+            console.log(response)
+            console.log("restuarant1 Name: " + response.restaurants[0].restaurant.name)
+            console.log("restuarant1 Rating: " + response.restaurants[0].restaurant.user_rating.aggregate_rating)
+            console.log("restuarant1 Menu URL: " + response.restaurants[0].restaurant.menu_url)
+            
+            //Check the city location of the first restaurant from the search.
+            var cityCheck = response.restaurants[0].restaurant.location.city 
+            console.log("cityCheck: " + cityCheck)
+            console.log("userCity: " + pulluserCity)
+    
+            //If the API is not pulling restuarants from the same city that the user searched for, find out, and change the outcome of the restuarant search. 
+            if ( cityCheck === pulluserCity ) {
+                $("#page4food").html("<p>Taste the Food...</p>")
+    
+                //Grab the restaurant name, the aggregate rating, and the menu url, and then build a link/button for each restuarant and append it to the results page.
+                for ( let i = 0; i<12; i++ ) {
+                    var restName = response.restaurants[i].restaurant.name,
+                        restRating = response.restaurants[i].restaurant.user_rating.aggregate_rating,
+                        restMenu = response.restaurants[i].restaurant.menu_url,
+                        restDiv = $("<div class=\"restOptions\">"),
+                        restDivFilled = restDiv.html("<a href=\"" + restMenu + "\" target=\"blank\"><button class=\"restLink\" target=\"blank\" id=\"rest" + i + "\">" + restName + " Rating: " + restRating + " </button></a>")
+                    $("#page4food").append(restDivFilled)
+    
+                }
+                
+            } else {
+                $("#page4food").html("<p>Oops! Looks like we don't have restuarants in this location.</p>")
+    
+                //Set the color of results page based on whether the city's local time is day or night.
+            }
+        });
+        
+    },3000)
 
-            //Set the color of results page based on whether the city's local time is day or night.
-        }
-    });
+    
 
     //This section updates the displays of all the content containers on the results page.
 
