@@ -91,7 +91,7 @@ var page1toPage2 = function () {
     //If the user has entered anthying into the user name field
     if ( $("#userIn").val() !== "" ) {
 
-        userArray.push($("#userIn").val().trim())
+        
         $("#page1").slideUp(1000)
         $("#page2, #page2Left").slideDown(1000)
         console.log("userArray: " + userArray) 
