@@ -1,4 +1,9 @@
 /*Travel Styling Here */
+
+@viewport {
+    width: device-width;
+    zoom: 1.0;
+}
 /*html, body styled to be the same size as the view port */
 html, body {
     height: 100%;
@@ -6,6 +11,8 @@ html, body {
     margin: 0;
     /* background-image: url("../images/brown_background.jpg") */
 }
+
+
 
 /* Font Styling */
 h1 {
@@ -73,14 +80,10 @@ button:hover {
 .row9 {
     height: 80%;
 }
-
-.row10 {
-   height: 33.33%;
+.row10, .row11, .row12 {
+    height: 100%;
 }
 
-.row11 {
-    height: 66.67%
-}
 
 /*Background Globe*/
 #globe1, #globe2, #globe3 {
@@ -289,6 +292,12 @@ li {
     animation-name: BackgroundAnimator;
     animation-duration: 10s;
     animation-iteration-count: infinite
+}
+
+#mapContainer {
+    height: 480px;
+    width: 840px;
+    margin: auto;
 }
 
 #page1Center {
