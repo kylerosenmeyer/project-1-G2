@@ -58,9 +58,6 @@
     <div class="container-fluid" id="pres1">
         <!--This is Row 1, Page 1-->
         <div class="row row1">
-          <div class="backgroundGlobe">
-            <i class="fas fa-globe-americas backgroundGlobe" id="globe1"></i>
-          </div>
         </div>
         <!--This is Row 2, Page 1-->
         <div class="row row2">
@@ -79,15 +76,12 @@
     <div class="container-fluid" id="pres2">
       <!--This is Row 1, Page 1-->
       <div class="row row1">
-        <div class="backgroundGlobe">
-          <i class="fas fa-globe-americas backgroundGlobe" id="globe1"></i>
-        </div>
       </div>
       <!--This is Row 2, Page 1-->
       <div class="row row2">
         <div class="col-3"></div>
           <div class="col-6" id="pres2Center">
-              <p class="slidecontent">What are we doing?</p>
+              <p class="slidecontent slide2">What are we doing?</p>
               <p class="slidecontent">How are we doing it?</p>
           </div>
           <div class="col-3"></div>
@@ -100,15 +94,12 @@
     <div class="container-fluid" id="pres3">
       <!--This is Row 1, Page 1-->
       <div class="row row1">
-        <div class="backgroundGlobe">
-          <i class="fas fa-globe-americas backgroundGlobe" id="globe1"></i>
-        </div>
       </div>
       <!--This is Row 2, Page 1-->
       <div class="row row2">
         <div class="col-3"></div>
           <div class="col-6" id="pres3Center">
-              <p class="slidecontent">What steps did you take to build the app?</p>
+              <p class="slidecontent slide3">What steps did it take to build our app?</p>
           </div>
           <div class="col-3"></div>
       </div>
@@ -155,6 +146,8 @@
           <!--This is the first Input Card-->
           <div class="col-6" id="page2Left">
             <div class="card-body" >  
+              <i class="fas fa-map-marker pinLeft"></i>
+              <i class="fas fa-map-marker pinRight"></i>
               <h5 class="card-title" >First, Pick a City</h5>
               <i class="fas fa-city cityIcon"></i>
               <form>
@@ -168,28 +161,30 @@
           <!--This is the second Input Card-->
           <div class="col-6" id="page2Right">
             <div class="card-body">
+              <i class="fas fa-map-marker pinLeft"></i>
+              <i class="fas fa-map-marker pinRight"></i>
               <h5 class="card-title">Now, Pick a Taste  <i class="fas fa-utensils foodIcon"></i></h5>
               <ul>
                 <!--These are the food buttons. They are hard coded now, but should be dynamically created from the actuall cuisines avialable from search.-->
-                <li class="foodBtn" data-name="asian" id="food1"><button class="foodBtn">Asian</button></li>
-                <li class="foodBtn" data-name="italian" id="food2"><button class="foodBtn">Italian</button></li>
-                <li class="foodBtn" data-name="american" id="food3"><button class="foodBtn">American</button></li>
-                <li class="foodBtn" data-name="bbq" id="food4"><button class="foodBtn">BBQ</button></li>
-                <li class="foodBtn" data-name="beverages" id="food5"><button class="foodBtn">Beverages</button></li>
-                <li class="foodBtn" data-name="french" id="food6"><button class="foodBtn">French</button></li>
-                <li class="foodBtn" data-name="german" id="food7"><button class="foodBtn">German</button></li>
-                <li class="foodBtn" data-name="healthy-food" id="food8"><button class="foodBtn">Healthy Food</button></li>
-                <li class="foodBtn" data-name="indian" id="food9"><button class="foodBtn">Indian</button></li>
-                <li class="foodBtn" data-name="mexian" id="food10"><button class="foodBtn">Mexican</button></li>
-                <li class="foodBtn" data-name="mediterranean" id="food11"><button class="foodBtn">Mediterranean</button></li>
-                <li class="foodBtn" data-name="seafood" id="food12"><button class="foodBtn">Seafood</button></li>
-                <li class="foodBtn" data-name="vegetarian" id="food13"><button class="foodBtn">Vegetarian</button></li>
-                <li class="foodBtn" data-name="vietnamese" id="food14"><button class="foodBtn">Vietnamese</button></li>
-                <li class="foodBtn" data-name="chinese" id="food15"><button class="foodBtn">Chinese</button></li>
-                <li class="foodBtn" data-name="japanese" id="food16"><button class="foodBtn">Japanse</button></li>
-                <li class="foodBtn" data-name="thai" id="food17"><button class="foodBtn">Thai</button></li>
-                <li class="foodBtn" data-name="middle-eastern" id="food18"><button class="foodBtn">Middle Eastern</button></li>
-                <li class="foodBtn" data-name="irish" id="food19"><button class="foodBtn">Irish</button></li>
+                <li class="foodBtn" data-name="asian" data-id="3" id="food1"><button class="foodBtn">Asian</button></li>
+                <li class="foodBtn" data-name="italian" data-id="55" id="food2"><button class="foodBtn">Italian</button></li>
+                <li class="foodBtn" data-name="american" data-id="1" id="food3"><button class="foodBtn">American</button></li>
+                <li class="foodBtn" data-name="bbq" data-id="193" id="food4"><button class="foodBtn">BBQ</button></li>
+                <li class="foodBtn" data-name="beverages"  data-id="270" id="food5"><button class="foodBtn">Beverages</button></li>
+                <li class="foodBtn" data-name="french" data-id="45" id="food6"><button class="foodBtn">French</button></li>
+                <li class="foodBtn" data-name="german" data-id="134" id="food7"><button class="foodBtn">German</button></li>
+                <li class="foodBtn" data-name="healthy-food" data-id="143" id="food8"><button class="foodBtn">Healthy Food</button></li>
+                <li class="foodBtn" data-name="indian" data-id="148" id="food9"><button class="foodBtn">Indian</button></li>
+                <li class="foodBtn" data-name="mexian" data-id="73" id="food10"><button class="foodBtn">Mexican</button></li>
+                <li class="foodBtn" data-name="mediterranean" data-id="70" id="food11"><button class="foodBtn">Mediterranean</button></li>
+                <li class="foodBtn" data-name="seafood" data-id="83" id="food12"><button class="foodBtn">Seafood</button></li>
+                <li class="foodBtn" data-name="vegetarian" data-id="308" id="food13"><button class="foodBtn">Vegetarian</button></li>
+                <li class="foodBtn" data-name="vietnamese" data-id="99" id="food14"><button class="foodBtn">Vietnamese</button></li>
+                <li class="foodBtn" data-name="chinese" data-id="25" id="food15"><button class="foodBtn">Chinese</button></li>
+                <li class="foodBtn" data-name="japanese" data-id="60" id="food16"><button class="foodBtn">Japanse</button></li>
+                <li class="foodBtn" data-name="thai" data-id="95" id="food17"><button class="foodBtn">Thai</button></li>
+                <li class="foodBtn" data-name="middle-eastern" data-id="137" id="food18"><button class="foodBtn">Middle Eastern</button></li>
+                <li class="foodBtn" data-name="irish" data-id="135" id="food19"><button class="foodBtn">Irish</button></li>
               </ul>
               <a class="btn primaryBtn" href="#" role="button" id="foodSubmit">Next</a>
             </div>
@@ -219,7 +214,7 @@
       <!--This is Row 3, Page 4-->
       <div class="row row10">
         <div class="col-12" id="page4map">
-          <div class="load-hidden" id="mapContainer"></div>
+            <div class="here-maps" id="mapContainer"></div>
         </div>
       </div>
       <!--This is Row 4, Page 4-->
@@ -231,7 +226,7 @@
           <div class="col-12" id="page4go">
             <p>Go There...</p>
             <!--This is the vacation widget from Expedia-->
-            <div id="searchWidget" style="width:80%;height:80%;"><iframe id="widgetIframe" src="https://www.expedia.com/marketing/widgets/searchform/widget?wtt=1&tp1=5164949&tp2=&lob=H,FH,F&des=&wbi=13&olc=FFFFFF&whf=4&hfc=C7C7C7&wif=4&ifc=000000&wbc=FFCB00&wbf=4&bfc=3D3100&wws=1&sfs=H100RW80R" width="80%" height="80%" scrolling="yes" frameborder="0"></iframe></div>
+            <div id="searchWidget" style="width:100%;height:91%;"><iframe id="widgetIframe" src="https://www.expedia.com/marketing/widgets/searchform/widget?wtt=1&tp1=5164949&tp2=&lob=H,FH,F&des=&wbi=13&olc=FFFFFF&whf=4&hfc=C7C7C7&wif=4&ifc=000000&wbc=FFCB00&wbf=4&bfc=3D3100&wws=1&sfs=H100RW80R" width="100%" height="91%" scrolling="yes" frameborder="0"></iframe></div>
           </div>
       </div> 
     </div>
