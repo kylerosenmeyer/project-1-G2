@@ -44,37 +44,64 @@ var userName = "",
 //This is the docunent ready code section. The main action happening here is the setup of the subsequent pages, and the animation of the globes.
 
 $(document).ready(function(){
-    userArray = []
-    userObject = {}
+    $("#pres2, #pres3, #page1").fadeOut(0)
     $("#page2, #page4, #page2Left, #page2Right").slideUp(0)
     $("#page3").fadeOut(0)
+})
 
-    //This conditional section changes the way the globes animate when they come in. Kind of like a media query. For now there are only two ways the globes come in, the desktop version and mobile version. But more mobile versions are probably necessary.
-    if ( window.innerHeight > window.innerWidth) {
-        var totalWidth = window.innerWidth
-            globeTop = String(Math.floor(0.35*totalWidth) + "px")
-            globeLeft = String(Math.floor(0.05*totalWidth) + "px")
-            globeSize = String(Math.floor(0.93*totalWidth) + "px")
-        $("#globe1, #globe2, #globe3").animate({
-            "top": globeTop,
-            "left": globeLeft,
-            "font-size": globeSize,
-            "opacity": "0.8"
-        }, 2000)
-    } else {
-        var totalWidth = window.innerWidth
-            globeTop = String(Math.floor(0.001*totalWidth) + "px")
-            globeLeft = String(Math.floor(0.26*totalWidth) + "px")
-            globeSize = String(Math.floor(0.50*totalWidth) + "px")
-        $("#globe1, #globe2, #globe3").animate({
-            "top": globeTop,
-            "left": globeLeft,
-            "font-size": globeSize,
-            "opacity": "0.8"
-        }, 2000)
-    }
+//This is the transistion from slide one to slide two.
+
+$("#pres1").click(function(){
+    $("#pres1").fadeOut(1000)
+    $("#pres2").delay(1000).fadeIn(1000)
+})
+
+//This is the transistion from slide two to slide three.
+
+$("#pres2").click(function(){
+    $("#pres2").fadeOut(1000)
+    $("#pres3").delay(1000).fadeIn(1000)
+})
+
+//This is the transistion from slide three to slide main-page.
+
+$("#pres3").click(function(){
+    $("#pres3").fadeOut(1000)
+    $("#page1").delay(1000).fadeIn(1000)
+    userArray = []
+
+
+    setTimeout(function(){
+        //This conditional section changes the way the globes animate when they come in. Kind of like a media query. For now there are only two ways the globes come in, the desktop version and mobile version. But more mobile versions are probably necessary.
+        if ( window.innerHeight > window.innerWidth) {
+            var totalWidth = window.innerWidth
+                globeTop = String(Math.floor(0.35*totalWidth) + "px")
+                globeLeft = String(Math.floor(0.05*totalWidth) + "px")
+                globeSize = String(Math.floor(0.93*totalWidth) + "px")
+            $("#globe1, #globe2, #globe3").animate({
+                "top": globeTop,
+                "left": globeLeft,
+                "font-size": globeSize,
+                "opacity": "0.8"
+            }, 2000)
+        } else {
+            var totalWidth = window.innerWidth
+                globeTop = String(Math.floor(0.001*totalWidth) + "px")
+                globeLeft = String(Math.floor(0.26*totalWidth) + "px")
+                globeSize = String(Math.floor(0.50*totalWidth) + "px")
+            $("#globe1, #globe2, #globe3").animate({
+                "top": globeTop,
+                "left": globeLeft,
+                "font-size": globeSize,
+                "opacity": "0.8"
+            }, 2000)
+        }
+
+    },1550)
 
 })
+
+
 
 //The page1toPage2 function and the next two events watch for the user name submit. Submittal can come from pushing the submit button or pushing the enter key.
 
