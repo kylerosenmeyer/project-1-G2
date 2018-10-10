@@ -6,27 +6,32 @@
 }
 /*html, body styled to be the same size as the view port */
 html, body {
-    height: 99%;
+    height: 100%;
     padding:0;
     margin: 0;
-    overflow-x: initial;
-    overflow: initial;
-    overflow-y: initial;
     /* background-image: url("../images/brown_background.jpg") */
 }
 
 .slidetitle {
 
-    padding: 10% 10% 0;
+    padding: 50px 20px 0px;
+    font-size: 2.5em;
 }
 
 .slidecontent {
 
-    padding: 10%;
+    padding: 0px 20px 20px;
+    font-size: 1.5em;
+}
+
+.slide2, .slide3 {
+
+    padding-top: 70px;
+
 }
 
 #pres1 {
-    background-image: linear-gradient(45deg,rgb(187, 137, 187),rgb(102, 117, 134));
+    background-image: linear-gradient(45deg,rgb(187, 137, 100),rgb(102, 117, 134));
     background-size: 400%;
     animation-name: BackgroundAnimator;
     animation-duration: 10s;
@@ -148,7 +153,7 @@ button:hover {
 
 /*User Input Cards*/
 .card-body {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-image: url("../images/linedpaper.png");
     box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
     border: 5px ridge rgba(120, 153, 130,0.35);
     border-radius: 15px;
@@ -240,7 +245,7 @@ li {
 
 /*This is the styling for the food buttons*/
 .foodBtn {
-    font-size: 1.2em;
+    font-size: 1.5em;
     z-index: 3;
 }
 /*This is the styling for the restuarant results*/
@@ -279,6 +284,19 @@ li {
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
 }
+
+.pinLeft {
+    float: left;
+    color: darkred;
+    font-size: 1.5em;
+}
+
+.pinRight {
+    float: right;
+    color: darkred;
+    font-size: 1.5em;
+}
+
 /*This is the styling for the restuarant results*/
 @keyframes linkHoverDay {
     0% { font-size: 1.1em;
@@ -318,14 +336,15 @@ li {
 }
 
 #page2 {
-    background-image: linear-gradient(45deg,rgba(120, 153, 130,1),rgb(102, 117, 134));
+    /* background-image: linear-gradient(45deg,rgba(120, 153, 130,1),rgb(102, 117, 134));
     background-size: 400%;
     animation-name: BackgroundAnimator;
     animation-duration: 10s;
-    animation-iteration-count: infinite
+    animation-iteration-count: infinite */
+    background-image: url("../images/cork-wallet_brown2.jpg");
 }
 
-#page4, .row9, .row10, .row11, .row12 {
+.row8, .row9, .row11, .row12 {
     background-image: linear-gradient(45deg,rgb(116, 105, 98),rgba(180, 172, 166,1)); 
     color: black;
     background-size: 400%;
@@ -335,13 +354,14 @@ li {
 }
 
 #mapContainer {
-    height: 600px;
-    width: 1000px;
+    height: 100%;
+    width: 90%;
+    display: block;
     margin: auto;
-    padding: 5%;
-    overflow-x: initial;
-    overflow: initial;
-    overflow-y: initial;
+}
+
+.here-maps  {
+    max-width: none;
 }
 
 html.sr .load-hidden {

@@ -22,7 +22,6 @@ var userName = "",
     longitude = "",
     userArray = [],
     currentDate = "",
-    userObject = {},
     coordinates = [],
     database = firebase.database(),
 
@@ -38,7 +37,8 @@ var userName = "",
     apiKey = "929d8637e5cb4a0b83bffcfc9128e8dd",
 
     //variables for Zomato API only
-    foodSelection = ""
+    foodSelection = "",
+    cuisineId = ""
 
 
 //This is the docunent ready code section. The main action happening here is the setup of the subsequent pages, and the animation of the globes.
@@ -47,6 +47,13 @@ $(document).ready(function(){
     $("#pres2, #pres3, #page1").fadeOut(0)
     $("#page2, #page4, #page2Left, #page2Right").slideUp(0)
     $("#page3").fadeOut(0)
+
+    $("#globe1, #globe2, #globe3").css({
+        "top": 0,
+        "left": 0,
+        "font-size": "1em",
+        "opacity": "0"
+    })
 })
 
 //This is the transistion from slide one to slide two.
@@ -70,6 +77,16 @@ $("#pres3").click(function(){
     $("#page1").delay(1000).fadeIn(1000)
     userArray = []
 
+    setTimeout( function() {
+        $("#globe1, #globe2, #globe3").css({
+            "top": "2%",
+            "left": "2%",
+            "font-size": "8000%",
+            "opacity": "0.2"
+        })
+    },1000)
+    
+
 
     setTimeout(function(){
         //This conditional section changes the way the globes animate when they come in. Kind of like a media query. For now there are only two ways the globes come in, the desktop version and mobile version. But more mobile versions are probably necessary.
@@ -77,7 +94,7 @@ $("#pres3").click(function(){
             var totalWidth = window.innerWidth
                 globeTop = String(Math.floor(0.35*totalWidth) + "px")
                 globeLeft = String(Math.floor(0.05*totalWidth) + "px")
-                globeSize = String(Math.floor(0.93*totalWidth) + "px")
+                globeSize = String(Math.floor(0.50*totalWidth) + "px")
             $("#globe1, #globe2, #globe3").animate({
                 "top": globeTop,
                 "left": globeLeft,
@@ -242,6 +259,7 @@ $("#citySubmit").click( function() {
 //The next event watches for your food selection and applies some styling while changing the string stored in the food variable.
 $(".foodBtn").click( function() {
     foodSelection = $(this).attr("data-name")
+    cuisineId = $(this).attr("data-id")
     
     for (let j=0; j<19; j++ ) {
         if ( $("#food"+j).attr("data-name") === $(this).attr("data-name") ) {
@@ -258,7 +276,7 @@ $("#foodSubmit").click( function() {
 
     if ( foodSelection !== "" ) {
 
-        userArray.push(foodSelection)
+        userArray.push(foodSelection, cuisineId)
         console.log("userArray: " + userArray)
         
     } else {
@@ -273,6 +291,7 @@ $("#foodSubmit").click( function() {
         userCity: userArray[1],
         cityQuery: userArray[2],
         foodChoice: userArray[3],
+        cuisineID: userArray[4]
     })
 
     //This calls all the api queries and builds the results page!
@@ -283,37 +302,31 @@ $("#foodSubmit").click( function() {
 //This is the function that builds the results page from the User's data.
 var buildResults = function() {
 
-    setTimeout(function(){
-        var winWidth = window.innerWidth,
-        newWidth = winWidth -500,
-        winHeight = window.innerHeight,
-        resize = function() {
-            window.resizeTo(newWidth, winHeight)
-            console.log(newWidth + " " + winHeight)
-        },
-        oldSize = function() {
-            window.resizeTo(winWidth,winHeight)
-            console.log(winWidth + " " + winHeight)
-        }
-    resize();
-    oldSize();
-
-    },7000)
-    
-
     //declare variables to pull data from user's info
 
     var userCitypath = database.ref("users/" + userName + "/userCity"),
         userQuerypath = database.ref("users/" + userName + "/cityQuery"),
-        userFoodpath = database.ref("users/" + userName + "/foodChoice"),
+        userCuisinepath = database.ref("users/" + userName + "/cuisineID"),
+        userFoodpath = database.ref("users/" + userName + "/foodChoice")
         pulluserCity = "",
         pullcityQuery = "",
         pullfoodChoice = "",
+        pullcuisineId = "",
         currentDate = moment().format("LL")
 
         userCitypath.on( "value", function(snap) { pulluserCity = snap.val() } )
         userQuerypath.on( "value", function(snap) { pullcityQuery = snap.val() } )
         userFoodpath.on( "value", function(snap) { pullfoodChoice = snap.val() } )
+        userCuisinepath.on( "value", function(snap) { pullcuisineId = snap.val() } )
+
+    //This section updates the displays of all the content containers on the results page.
+
+    $("#page2").slideUp(1000)
+    $("#page4").slideDown(1000, function() {
+        console.log("slideDown done")
+    })
+    
+    $("#page4Top").html("<h1 id=\"resultTitle\">Imagine a Day in " + pulluserCity + ".</h1>")
 
     //Iniate the HERE Maps API by connecting to the service platform with the app id and app code. This code comes from the api documentation.
     var    platform = new H.service.Platform({
@@ -335,20 +348,24 @@ var buildResults = function() {
         console.log("coordinate check1: " + coordinates)
         
         // Display map using H.Map in the format of (element, maptype, options). This code comes partially from the api documentation.
-        
-        map = new H.Map(
-            //element (in vanilla JS only)
-            document.getElementById("mapContainer"),
-            //maptype
-            defaultLayers.terrain.map,
-            //Map settings (default zoom level and lat-long from the geocode results)
-            {   
-            zoom: 8,
-            //This is the search location
-            center: { lat: coordinates[0], lng: coordinates[1] }})
+        setTimeout( function() {
+            console.log("map loading!")
+            map = new H.Map(
+                //element (in vanilla JS only)
+                document.getElementById("mapContainer"),
+                //maptype
+                defaultLayers.terrain.map,
+                //Map settings (default zoom level and lat-long from the geocode results)
+                {   
+                zoom: 14,
+                //This is the search location
+                center: { lat: coordinates[0], lng: coordinates[1] }
+            });
+
             console.log("Lat on map load: " + coordinates[0])
             console.log("Long on map load: " + coordinates[1])
-
+            
+            
             
             // This is the map events section (next 8 lines). This is pulled from the API documentation to make the map interactive.
             var mapEvents = new H.mapevents.MapEvents(map);
@@ -358,8 +375,11 @@ var buildResults = function() {
             // Log 'tap' and 'mouse' events:
             console.log(evt.type, evt.currentPointer.type); 
             var behavior = new H.mapevents.Behavior(mapEvents);
+                
+            })
 
-        })
+        },1500)
+        
     }
     
     //Put the rebuilt city string into the search parameter. This will ensure consistency in searching API's and displaying results.
@@ -386,58 +406,61 @@ var buildResults = function() {
     //This is the search query for the Weatherbit API: Historical Weather Daily
     var queryURL = ("https://api.weatherbit.io/v2.0/history/daily?city=" + pullcityQuery+ "&start_date=" + dateStart + "&end_date=" + dateEnd + "&key=" + apiKey + "&units=I");
 
-    console.log("query URL: " + queryURL)
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then( function(response) {
-        var aveTemp = response.data[0].temp,
-            minTemp = response.data[0].min_temp,
-            maxTemp = response.data[0].max_temp,
-            clouds = response.data[0].clouds
-
-            console.log("avg temp: " + aveTemp)
-            console.log("min temp: " + minTemp)
-            console.log("max temp: " + maxTemp)
-            console.log("cloud percent: " + clouds)
-
-
-        //This is the Third section of the code snippet, which gets the data from the current weather api (weatherbit) for whether the city is in day or night.
-
-        var queryURL2 = ("https://api.weatherbit.io/v2.0/current?city=" + pullcityQuery + "&key=" + apiKey)
-
-        console.log("query URL2: " + queryURL2)
+    setTimeout( function() {
+        console.log("query URL: " + queryURL)
         $.ajax({
-            url: queryURL2,
+            url: queryURL,
             method: "GET"
         }).then( function(response) {
-            var dayNight = response.data[0].pod  
-            console.log("Day or Night: " + dayNight)
-            //Set the color of results page based on whether the city's local time is day or night.
-            if ( dayNight === "n" ) {
-                $("#page4, .row9, .row10, .row11, .row12").css({
-                    "background-image": "linear-gradient(45deg,rgb(47, 71, 99),rgb(27, 51, 78))",
-                    "color": "white"
-                })
-                setTimeout( function() {
-                    $(".restLink").removeClass("restLink").addClass("restLinkNight")
-                },5000)
-                
+            var aveTemp = response.data[0].temp,
+                minTemp = response.data[0].min_temp,
+                maxTemp = response.data[0].max_temp,
+                clouds = response.data[0].clouds
 
-            } 
+                console.log("avg temp: " + aveTemp)
+                console.log("min temp: " + minTemp)
+                console.log("max temp: " + maxTemp)
+                console.log("cloud percent: " + clouds)
+
+
+            //This is the Third section of the code snippet, which gets the data from the current weather api (weatherbit) for whether the city is in day or night.
+
+            var queryURL2 = ("https://api.weatherbit.io/v2.0/current?city=" + pullcityQuery + "&key=" + apiKey)
+
+            console.log("query URL2: " + queryURL2)
+            $.ajax({
+                url: queryURL2,
+                method: "GET"
+            }).then( function(response) {
+                var dayNight = response.data[0].pod  
+                console.log("Day or Night: " + dayNight)
+                //Set the color of results page based on whether the city's local time is day or night.
+                // if ( dayNight === "n" ) {
+                //     $("#page4, .row9, .row10, .row11, .row12").css({
+                //         "background-image": "linear-gradient(45deg,rgb(47, 71, 99),rgb(27, 51, 78))",
+                //         "color": "white"
+                //     })
+                //     setTimeout( function() {
+                //         $(".restLink").removeClass("restLink").addClass("restLinkNight")
+                //     },5000)
+                    
+
+                // } 
+            })
+
+            //Place the weather data into paragraph form on the results page.
+            $("#page4story").html(
+                "<p>Explore the City...</p>" +
+                "<p class=\"weatherReport\">On " + currentDate + ", " +
+                "it is usually " + aveTemp + "&#176. " +
+                "The average high is " + maxTemp + "&#176, " +
+                "the average low is " + minTemp + "&#176, " +
+                "and it is " + clouds + "% cloudy.</p>"
+            )
         })
-
-        //Place the weather data into paragraph form on the results page.
-        $("#page4story").html(
-            "<p>Explore the City...</p>" +
-            "<p class=\"weatherReport\">On " + currentDate + ", " +
-            "it is usually " + aveTemp + "&#176. " +
-            "The average high is " + maxTemp + "&#176, " +
-            "the average low is " + minTemp + "&#176, " +
-            "and it is " + clouds + "% cloudy.</p>"
-            
-        )
-    })
+    },1000)
+    
+    
 
     //This is the Ajax call for Zomato
     //On a click event, go get the list of Restaurants
@@ -473,25 +496,30 @@ var buildResults = function() {
                         restDiv = $("<div class=\"restOptions\">"),
                         restDivFilled = restDiv.html("<a href=\"" + restMenu + "\" target=\"blank\"><button class=\"restLink\" target=\"blank\" id=\"rest" + i + "\">" + restName + " Rating: " + restRating + " </button></a>")
                     $("#page4food").append(restDivFilled)
-    
+                    
+                    ScrollReveal().reveal("#rest"+i, {
+                        duration: 3000,
+                    })
+
+                    ScrollReveal().reveal("#searchWidget", {
+                        duration: 3000,
+                    })
                 }
                 
             } else {
                 $("#page4food").html("<p>Oops! Looks like we don't have restuarants in this location.</p>")
-    
-                //Set the color of results page based on whether the city's local time is day or night.
+                
+                ScrollReveal().reveal("#rest"+i, {
+                    duration: 3000,
+                })
+
+                ScrollReveal().reveal("#searchWidget", {
+                    duration: 3000,
+                })
             }
         });
         
-    },3000)
-
-    
-
-    //This section updates the displays of all the content containers on the results page.
-
-    $("#page2").slideUp(1000)
-    $("#page4").slideDown(1000)
-    $("#page4Top").html("<h1 id=\"resultTitle\">Imagine a Day in " + pulluserCity + ".</h1>")
+    },3500)
         
         
 }
@@ -501,18 +529,4 @@ $("#warningModal").on("shown.bs.modal", function () {
     $("#warningModal").trigger("focus")
 })
 
-
-// Use Scroll Reveal to display indivdual sections of the Results Page as you scroll down.
-ScrollReveal().reveal('#page4Top', {duration: 1000});
-// ScrollReveal().reveal('#page4story', {duration: 1000});
-ScrollReveal().reveal('#restOptions', {duration: 1000});
-ScrollReveal().reveal('#page4map', {duration: 1000});
-ScrollReveal().reveal('#page4food', {duration: 1000});
-ScrollReveal().reveal('#page4go', {duration: 1000});
-ScrollReveal().reveal('#searchWidget', {duration: 1000});
-
-
-if (ScrollReveal().noop) {
-    console.log('ScrollReveal is non-operational!');
-}
  
