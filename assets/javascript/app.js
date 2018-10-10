@@ -13,7 +13,7 @@ var config = {
 };
 
 firebase.initializeApp(config);
-firebase.database.enableLogging(true);
+// firebase.database.enableLogging(true);
 
 //Declare global variables to be used 
 var userName = "",
@@ -175,15 +175,15 @@ $("#citySubmit").click( function() {
     if ( $("#cityIn").val() !== "" ) {
         
         $("#citySubmit").off()
-        $("#page2Right").slideDown(2000)
+        $("#page2Right").slideDown(2000);
 
         $("#globe2").animate({
             "opacity":"0"
-        }, 2000)
+        }, 2000);
 
         $("#globe3").animate({
             "opacity": "0.8"
-        }, 2000)
+        }, 2000);
 
         //First, get the value of the user's search, and create an empty array and variable.
         var cityInput = $("#cityIn").val().trim(),
@@ -282,6 +282,24 @@ $("#foodSubmit").click( function() {
 
 //This is the function that builds the results page from the User's data.
 var buildResults = function() {
+
+    setTimeout(function(){
+        var winWidth = window.innerWidth,
+        newWidth = winWidth -500,
+        winHeight = window.innerHeight,
+        resize = function() {
+            window.resizeTo(newWidth, winHeight)
+            console.log(newWidth + " " + winHeight)
+        },
+        oldSize = function() {
+            window.resizeTo(winWidth,winHeight)
+            console.log(winWidth + " " + winHeight)
+        }
+    resize();
+    oldSize();
+
+    },7000)
+    
 
     //declare variables to pull data from user's info
 
@@ -485,9 +503,14 @@ $("#warningModal").on("shown.bs.modal", function () {
 
 
 // Use Scroll Reveal to display indivdual sections of the Results Page as you scroll down.
-ScrollReveal().reveal('#page4map', {delay: 50});
-ScrollReveal().reveal('#page4food', {delay: 100});
-ScrollReveal().reveal('#page4go', {delay: 100});
+ScrollReveal().reveal('#page4Top', {duration: 1000});
+// ScrollReveal().reveal('#page4story', {duration: 1000});
+ScrollReveal().reveal('#restOptions', {duration: 1000});
+ScrollReveal().reveal('#page4map', {duration: 1000});
+ScrollReveal().reveal('#page4food', {duration: 1000});
+ScrollReveal().reveal('#page4go', {duration: 1000});
+ScrollReveal().reveal('#searchWidget', {duration: 1000});
+
 
 if (ScrollReveal().noop) {
     console.log('ScrollReveal is non-operational!');
