@@ -484,5 +484,12 @@ $("#warningModal").on("shown.bs.modal", function () {
 })
 
 
+// Use Scroll Reveal to display indivdual sections of the Results Page as you scroll down.
+ScrollReveal().reveal('#page4map', {delay: 50});
+ScrollReveal().reveal('#page4food', {delay: 100});
+ScrollReveal().reveal('#page4go', {delay: 100});
 
+if (ScrollReveal().noop) {
+    console.log('ScrollReveal is non-operational!');
+}
  
