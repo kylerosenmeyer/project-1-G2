@@ -25,16 +25,15 @@ API Listing:
 
 1. Here Maps API
 
-2. Weatherbit Historical Data API
+2. Weatherbit Historical Data API & Current Weather API
 
 3. Zomato Restauarants API
 
 Library/Technogies:
 
 1. ScrollReveal.js 
-2. D3.js for visuals
-3. JQuery
-4. Moment
+2. JQuery
+3. Moment.js
 
 Schedule:
 
