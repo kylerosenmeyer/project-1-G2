@@ -287,9 +287,12 @@ $("#foodSubmit").click( function() {
         foodChoice: userArray[3],
         categoryID: userArray[4]
     })
-
-    //This calls all the api queries and builds the results page!
-    buildResults()
+    $("#foodSubmit").fadeOut(2000)
+    setTimeout( function() {
+        //This calls all the api queries and builds the results page!
+        buildResults()
+    },2000)
+    
      
 });
 
@@ -330,7 +333,8 @@ var buildResults = function() {
         //Iniate the HERE Maps API by connecting to the service platform with the app id and app code. This code comes from the api documentation.
         var    platform = new H.service.Platform({
             'app_id': "qA8H4eSKAGPuJ30pTryC",
-            'app_code': "e7_nFDb6gHJ1Hvp40oOtSQ"
+            'app_code': "e7_nFDb6gHJ1Hvp40oOtSQ",
+            useHTTPS: true
 
         });
 
