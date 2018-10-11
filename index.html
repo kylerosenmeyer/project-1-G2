@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Travel Planner</title>
+    <title>Transpire</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,6 +34,37 @@
   </head>
   <body>
 
+     <!--Slide 1 - Transpire - We inspire Travel-->
+    <!--Speaker Role 1 (Kyle): Introduce Group, declare the title (Transpire: We Inspire Travel-->
+    <!--Two Liner: We inspire people to travel by planning a day for them in a new place-->
+
+    <!--Slide 2 - What are we doing?-->
+    <!--Speaker Role 2 (Doug): We ask you a few simple questions, build a day for you in a new place. What does a day
+       in a place look like? A full day. You may want typical weather, a map to explore the city,
+       things do and see, and good places to eat. How are we going to deliver this full day to the user? 
+       We take the user inputs and query publicly available api's for catered information, and provide booking 
+       through a travel affiliate program. The phase 1 resources we used were the Expedia Travel Affilate 
+       Program, the HERE Maps API,The Weatherbit Weather Api, and the Zomato Restuarants Api-->
+
+    <!--Slide 3 How Did we Build it?-->
+    <!--Speaker Role 3 (Bobby): We research available API's to determine what kind of experience we could cater
+      for a user and what kind of information we would want as users. We laid out wires visualize the 
+      user experience, anticapte out points of collecting and deliver information, and imagine a look and feel. 
+      We pivoted our content based on the available technology, resources, and expertise available to the team.
+      We built prototype and we tested it, and iterated it into the product we have to share today. -->
+
+    <!--App Run Through-->
+    <!--Speaker Role 4 (Auden): Describe Page 1 and Page 2 as we demo the app. What HTML, CSS, and Javascript is 
+    happening.--> 
+    <!--Challenges: Div Overlaps, cityquery builder, mobile readiness.-->
+    <!--Key Points: The user-submit click event. The city-submit click event. The foodsubmit click event.-->
+
+    <!--Speaker Role 1 (Kyle): Describe Page 4, the data flow, api queries, results display.-->
+    <!-- Challenges: Scroll Reveal, map display, conditional css on dynamic elements, asynchronous dataetc.-->
+    <!-- Key Points: Delivering the data from fire base. Each API Query-->
+
+
+
     <!--This is the modal that pops if you don't fill out the form all the way-->
     <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -49,6 +80,29 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!--This is the modal that pops if you don't fill out the form all the way-->
+     <div class="modal fade" id="usercheckModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Welcome Back!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Would you like to visit the last day you built?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="newDay">Start a New Day</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="oldDay">Go to my Saved Day</button>
                 </div>
             </div>
         </div>
@@ -69,7 +123,9 @@
             <div class="col-3"></div>
         </div>
         <!--This is Row 3, Page 1-->
-        <div class="row row3"></div>
+        <div class="row row3">
+          <button class="skipBtn" data-toggle="false">Skip Presentation</button>
+        </div>
     </div>
 
     <!--This is Pres2-->
@@ -121,7 +177,7 @@
       <div class="row row2">
         <div class="col-3" id="page1Left"></div>
           <div class="col-6" id="page1Center">
-            <h1>Have #NAME?  Let's Travel.</h1>
+            <h1><i class="fas fa-map-marker pinLeft"></i>Have #NAME?  Let's Travel.</i></h1>
             <input type="text" class="formInput" id="userIn" placeholder="Enter Username">
             <button type="submit" class="btn primaryBtn" id="user-submit">Let's Go</button>
           </div>
@@ -144,7 +200,7 @@
         <!--This is Row 2, Page-->
         <div class="row row5">
           <!--This is the first Input Card-->
-          <div class="col-6" id="page2Left">
+          <div class="col-md-6" id="page2Left">
             <div class="card-body" >  
               <i class="fas fa-map-marker pinLeft"></i>
               <i class="fas fa-map-marker pinRight"></i>
@@ -159,25 +215,19 @@
             </div>   
           </div>
           <!--This is the second Input Card-->
-          <div class="col-6" id="page2Right">
+          <div class="col-md-6" id="page2Right">
             <div class="card-body">
               <i class="fas fa-map-marker pinLeft"></i>
               <i class="fas fa-map-marker pinRight"></i>
               <h5 class="card-title">Now, Pick a Taste  <i class="fas fa-utensils foodIcon"></i></h5>
               <ul>
                 <!--These are the food buttons. They are hard coded now, but should be dynamically created from the actuall cuisines avialable from search.-->
-                <li class="foodBtn" data-name="asian" data-id="3" id="food1"><button class="foodBtn">Asian</button></li>
-                <li class="foodBtn" data-name="italian" data-id="55" id="food2"><button class="foodBtn">Italian</button></li>
-                <li class="foodBtn" data-name="american" data-id="1" id="food3"><button class="foodBtn">American</button></li>
-                <li class="foodBtn" data-name="bbq" data-id="193" id="food4"><button class="foodBtn">BBQ</button></li>
-                <li class="foodBtn" data-name="beverages"  data-id="270" id="food5"><button class="foodBtn">Beverages</button></li>
-                <li class="foodBtn" data-name="french" data-id="45" id="food6"><button class="foodBtn">French</button></li>
-                <li class="foodBtn" data-name="german" data-id="134" id="food7"><button class="foodBtn">German</button></li>
-                <li class="foodBtn" data-name="healthy-food" data-id="143" id="food8"><button class="foodBtn">Healthy Food</button></li>
-                <li class="foodBtn" data-name="indian" data-id="148" id="food9"><button class="foodBtn">Indian</button></li>
-                <li class="foodBtn" data-name="mexian" data-id="73" id="food10"><button class="foodBtn">Mexican</button></li>
-                <li class="foodBtn" data-name="seafood" data-id="83" id="food12"><button class="foodBtn">Seafood</button></li>
-                <li class="foodBtn" data-name="vegetarian" data-id="308" id="food13"><button class="foodBtn">Vegetarian</button></li>
+                <li class="foodBtn" data-name="Breakfast" data-id="8" id="food1"><button class="foodBtn">Breakfast</button></li>
+                <li class="foodBtn" data-name="Lunch" data-id="9" id="food2"><button class="foodBtn">Lunch</button></li>
+                <li class="foodBtn" data-name="Dinner" data-id="10" id="food3"><button class="foodBtn">Dinner</button></li>
+                <li class="foodBtn" data-name="Pubs-&-Bars" data-id="11" id="food4"><button class="foodBtn">Pubs & Bars</button></li>
+                <li class="foodBtn" data-name="Cafes"  data-id="6" id="food5"><button class="foodBtn">Cafes</button></li>
+                <li class="foodBtn" data-name="Delivery" data-id="2" id="food6"><button class="foodBtn">Delivery</button></li>
               </ul>
               <a class="btn primaryBtn" href="#" role="button" id="foodSubmit">Next</a>
             </div>
@@ -217,9 +267,9 @@
       <!--This is Row 5, Page 4-->
       <div class="row row12">
           <div class="col-12" id="page4go">
-            <p>Go There...</p>
+            <p class="page4Title"><i class="fas fa-map-marker pinLeft"></i>Go There...<i class="fas fa-map-marker pinRight"></i></p>
             <!--This is the vacation widget from Expedia-->
-            <div id="searchWidget" style="width:100%;height:91%;"><iframe id="widgetIframe" src="https://www.expedia.com/marketing/widgets/searchform/widget?wtt=1&tp1=5164949&tp2=&lob=H,FH,F&des=&wbi=13&olc=FFFFFF&whf=4&hfc=C7C7C7&wif=4&ifc=000000&wbc=FFCB00&wbf=4&bfc=3D3100&wws=1&sfs=H100RW80R" width="100%" height="91%" scrolling="yes" frameborder="0"></iframe></div>
+            <div id="searchWidget" style="width:100%;height:90%;"><iframe id="widgetIframe" src="https://www.expedia.com/marketing/widgets/searchform/widget?wtt=1&tp1=5164949&tp2=&lob=H,FH,F&des=&wbi=13&olc=FFFFFF&whf=4&hfc=C7C7C7&wif=4&ifc=000000&wbc=FFCB00&wbf=4&bfc=3D3100&wws=1&sfs=H100RW80R" width="100%" height="90%" scrolling="yes" frameborder="0"></iframe></div>
           </div>
       </div> 
     </div>

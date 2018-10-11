@@ -1,45 +1,43 @@
 /*Travel Styling Here */
-@viewport {
+/* @viewport {
     width: device-width;
     zoom: 1.0;
-}
-
-
-/* @media only screen and (min-width : 992px) {
-   [class*="row-"] {
-        width: 100%;
-    }
-}  */
-
-
-
+} */
 
 /*html, body styled to be the same size as the view port */
 html, body {
     height: 100%;
     padding:0;
     margin: 0;
-    /* background-image: url("../images/brown_background.jpg") */
 }
 
+/*Title on presentation slide 1 */
 .slidetitle {
 
     padding: 50px 20px 0px;
-    font-size: 2.5em;
+    font-size: 4em;
 }
 
+/* Body text on presentation slides. */
 .slidecontent {
 
     padding: 0px 20px 20px;
-    font-size: 1.5em;
+    font-size: 2.5em;
 }
 
+/* Body text on presentation slides. */
+.slidecontent:first-of-type {
+    margin-top: 25px;
+}
+
+/* Body text on presentation slides. */
 .slide2, .slide3 {
 
     padding-top: 70px;
 
 }
 
+/* Presentation Slide 1 Container Styling */
 #pres1 {
     background-image: linear-gradient(45deg,rgb(187, 137, 100),rgb(102, 117, 134));
     background-size: 400%;
@@ -48,6 +46,7 @@ html, body {
     animation-iteration-count: infinite;
 }
 
+/* Presentation Slide 2 Container Styling */
 #pres2 {
     background-image: linear-gradient(45deg,rgb(102, 117, 134),rgb(199, 166, 106));
     background-size: 400%;
@@ -56,6 +55,7 @@ html, body {
     animation-iteration-count: infinite;
 }
 
+/* Presentation Slide 3 Container Styling */
 #pres3 {
     background-image: linear-gradient(45deg,rgb(199, 166, 106),rgba(180, 172, 166,1));
     background-size: 400%;
@@ -64,11 +64,10 @@ html, body {
     animation-iteration-count: infinite;
 }
 
-
-
 /* Font Styling */
 h1 {
     /* font-family: 'harabarahanditalic', Arial, sans-serif; */
+    /* font not used*/
     font-family: 'Gloria Hallelujah', cursive;
     font-weight:normal;
     font-style:normal;
@@ -153,20 +152,12 @@ button:hover {
     z-index: 1;
 }
 
-
-
-/*Weather Results*/
-.weatherReport {
-    padding: 3%;
-    font-size: 1.5em;
-}
-
 /*User Input Cards*/
 .card-body {
     background-image: url("../images/linedpaper.png");
-    box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
-    border: 5px ridge rgba(120, 153, 130,0.35);
-    border-radius: 15px;
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.5);
+    border: 2px dashed rgba(0, 0, 0, 0.5);
+    border-radius: 35px;
     margin: 0 auto;
     width: 80%;
     height: 100%;
@@ -217,7 +208,6 @@ form {
 /*Button Styling - this the class for the next buttons*/
 .primaryBtn {
     margin-top: 3%;
-    background-color: rgb(100, 100, 100, 0);
     color: black;
     padding: 2% 6%;
     border: 2px solid rgb(100, 100, 100, 1);
@@ -232,14 +222,31 @@ form {
     border: 2px solid rgb(100, 100, 100, 0);
     outline: none;
     background-image: linear-gradient(45deg,rgba(120, 153, 130,1),rgb(102, 117, 134, 1));
-    animation-name: BackgroundAnimator;
-    animation-duration: 1s;
-    animation-iteration-count: infinite
 }
 
 button:focus, .primaryBtn:focus, button:active, .primaryBtn:active, button:visited, .primaryBtn:visited {
    outline: none;
-   background-color: rgb(100, 100, 100, 0)
+   border: 2px solid rgb(100, 100, 100, 0);
+}
+
+/* This is the skip presentation button */
+.skipBtn {
+    position: fixed;
+    bottom: 0px;
+    background-color: none;
+    border: 2px solid black;
+    height: 30px;
+    padding: 5px;
+}
+
+.skipBtn:hover {
+    position: fixed;
+    bottom: 0px;
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+    height: 30px;
+    padding: 5px;
 }
 
 /*This is the styling for the food buttons*/
@@ -258,78 +265,61 @@ li {
     font-size: 1.2em;
     z-index: 3;
 }
+
 /*This is the styling for the restuarant results*/
 .restOptions {
     display: inline-block;
     margin: 2%;
-}
-/*This is the styling for the restuarant results*/
-.restLink {
+    background-image: url("../images/linedpaper.png");
     text-decoration: none;
     color: black;
-    border: 2px solid rgb(0,0,0,0);
+    border: 2px dashed rgb(0,0,0,0.5);
     padding: 1%;
-    font-size: 1.1em;
+    font-size: 1.4em;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.5);
 }
+
 /*This is the styling for the restuarant results*/
-.restLinkNight {
-    display: inline-block;
+.restOptions:hover {
     text-decoration: none;
-    color: white;
-    border: 2px solid rgb(255,255,255,0);
-    padding: 1%;
-    font-size: 1.1em;
-}
-/*This is the styling for the restuarant results*/
-.restLink:hover {
-    text-decoration: none;
-    animation-name: linkHoverDay;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-}
-/*This is the styling for the restuarant results*/
-.restLinkNight:hover {
-    text-decoration: none;
-    animation-name: linkHoverNight;
+    animation-name: linkHover;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
 }
 
+/* This is the styling for the red pins on the app */
 .pinLeft {
     float: left;
     color: darkred;
     font-size: 1.5em;
+    transform: rotate(30deg);
+    text-shadow: 3px 2px rgba(0,0,0,0.25);
 }
 
+/* This is the styling for the red pins on the app */
 .pinRight {
     float: right;
     color: darkred;
     font-size: 1.5em;
+    transform: rotate(30deg);
+    text-shadow: 3px 2px rgba(0,0,0,0.25);
 }
 
 /*This is the styling for the restuarant results*/
-@keyframes linkHoverDay {
-    0% { font-size: 1.1em;
-         border: 2px solid rgb(0,0,0,0);
-         color: black}
-    100% {font-size: 1.2em;
-          border: 2px solid rgb(0,0,0,1);
-          color: black;}
-}
-/*This is the styling for the restuarant results*/
-@keyframes linkHoverNight {
-    0% { font-size: 1.1em;
-         border: 2px solid rgb(255,255,255,0);
-         color: white}
-    100% {font-size: 1.2em;
-          border: 2px solid rgb(255,255,255,1);
-          color: white;}
+@keyframes linkHover {
+    0% {transform: rotate(0deg);
+        transform-origin: top left}
+    50% {transform: rotate(3deg);
+        transform-origin: top left}
+    100% {transform: rotate(0deg);
+        transform-origin: top left}
 }
 
 
 /*ID Styling */
 
-/*These are the background colors used in the containers*/
+/*Background Animator is keyframe saved from another page that shifts the background around for you. With a linear-gradient it makes magic!*/
 
 @keyframes BackgroundAnimator {
     0% {background-position: 0% 50%}
@@ -337,52 +327,35 @@ li {
     100% {background-position: 0% 50%}
 }
 
-#page1 {
-    background-image: linear-gradient(45deg,rgba(180, 172, 166,1),rgba(120, 153, 130,1));
-    background-size: 400%;
-    animation-name: BackgroundAnimator;
-    animation-duration: 10s;
-    animation-iteration-count: infinite;
+/* This is the styling for the red pins on the app */
+#page1, #page2, #page4, .row10, .row11, .row12 {
+    background-image: url("../images/cork_brown.jpg")
 }
 
-#page2 {
-    /* background-image: linear-gradient(45deg,rgba(120, 153, 130,1),rgb(102, 117, 134));
-    background-size: 400%;
-    animation-name: BackgroundAnimator;
-    animation-duration: 10s;
-    animation-iteration-count: infinite */
-    background-image: url("../images/cork-wallet_brown2.jpg");
-}
-
-.row8, .row9, .row11, .row12 {
-    background-image: linear-gradient(45deg,rgb(116, 105, 98),rgba(180, 172, 166,1)); 
-    color: black;
-    background-size: 400%;
-    animation-name: BackgroundAnimator;
-    animation-duration: 10s;
-    animation-iteration-count: infinite
-}
-
+/* This is the styling and frame for the map */
 #mapContainer {
+    border: 25px ridge rgb(90, 75, 75);
     height: 100%;
     width: 90%;
     display: block;
     margin: auto;
 }
 
+/* This is from the HERE maps API site */
 .here-maps  {
     max-width: none;
 }
-
+/* This is from the Scroll Reveal site */
 html.sr .load-hidden {
     visibility: hidden;
 }
 
+/* This is the styling for the content section on page 1 */
 #page1Center {
-    background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
-    border: 5px ridge rgba(180, 172, 166,0.35);
-    border-radius: 15px;
+    background-image: url("../images/linedpaper.png");
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.5);
+    border: 2px dashed rgba(0, 0, 0, 0.5);
+    border-radius: 35px;
     z-index: 2;
 }
 
@@ -393,9 +366,19 @@ html.sr .load-hidden {
 
 /*This is extra styling for the username input field*/
 #userIn {
-    margin-top: 5%;
+    margin-top: 3%;
     height: 2em;
+}
 
+/* These are the pinned titles on page 4. */
+.page4Title {
+    background-image: url("../images/linedpaper.png");
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.5);
+    border: 2px dashed rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    margin: 3% auto;
+    padding: 1%;
+    width: 40%;
 }
 
 /*This is extra styling for the city name input field*/
@@ -404,31 +387,37 @@ html.sr .load-hidden {
     text-transform: capitalize;
 }
 
+/* This is the flight/hotels widget */
 #searchWidget {
+    border: 25px ridge rgb(90, 75, 75);
     margin: auto;
+    background-image: url("../images/linedpaper.png");
 }
 
+/* This is the styling for the content section on presentation page 1 */
 #pres1Center {
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
     border: 5px ridge rgba(180, 172, 166,0.35);
-    border-radius: 15px;
+    border-radius: 35px;
     z-index: 2;
 }
 
+/* This is the styling for the content section on presentation page 2 */
 #pres2Center {
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
     border: 5px ridge rgba(180, 172, 166,0.35);
-    border-radius: 15px;
+    border-radius: 35px;
     z-index: 2;
 }
 
+/* This is the styling for the content section on presentation page 3 */
 #pres3Center {
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0px 0px 0px 10px rgba(255, 255, 255, 0.35);
     border: 5px ridge rgba(180, 172, 166,0.35);
-    border-radius: 15px;
+    border-radius: 35px;
     z-index: 2;
 }
 
@@ -436,52 +425,83 @@ html.sr .load-hidden {
 .fade.in {
     opacity: 1;
 }
+/*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
+
 .modal.in .modal-dialog {
     -webkit-transform: translate(0, 0);
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
 }
+/*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
 .modal-backdrop.in {
     opacity: 0.5;
 }
 
-@media only screen and (max-width: 360px) {
-    .col-6 {
-        font-size: 5px;
-   }
-}
+/* This is the Media Query Section */
 
-
-    /* Small Devices, Tablets */
+/* Small Devices, Tablets */
 
 @media only screen and (max-width : 480px) {
-    .col-6 {s
+    .col-6 {
         font-size: 5px;
     }
 }
 
 @media only screen and (max-width : 768px) {
     .col-6 {
-        font-size: 10px;
+        font-size: 0.8em;
     }
     .card-body {
-        width: 600px;
+        width: 80%;
         display: block;
     }
+    .page4Title {
+        width: 80%;
+        margin-bottom: 5%;
+    }
+
+    .slidetitle {
+        font-size: 2.5em;
+        text-align: center;
+        margin: 10% auto 5% -5%;
+    }
+
+    .slidecontent {
+
+        padding: 0px 10px 10px;
+        font-size: 2em;
+    }
+
+    .slidecontent:first-of-type {
+        margin-top: 25%;
+    }
+
+    #userIn {
+        margin-top: 20%;
+    }
+
+    .row4 {
+        height: 1%;
+    }
+
+    .row6 {
+        height: 40%;
+    }
+
+    p {
+        font-size: 1.5em;
+    }
+
+    #resultTitle {
+        font-size: 2em;
+        margin-top: 5%;
+    }
+
+    .pinLeft, .pinRight {
+        font-size: 1em;
+    }
+
+     
 }
 
-    /* Medium Devices, Desktops
-    @media only screen and (min-width : 992px) {
-        .slidetitle {
-            font-size: 5px;
-       }
-    } */
-    
-
-    /* Large Devices, Wide Screens
-    @media only screen and (min-width : 1200px) {
-        .slidetitle {
-            font-size: 10%;
-       }
-    } */
  
