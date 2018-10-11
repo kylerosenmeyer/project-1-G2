@@ -464,6 +464,10 @@ html.sr .load-hidden {
     .col-6 {
         font-size: 10px;
     }
+    .card-body {
+        width: 600px;
+        display: block;
+    }
 }
 
     /* Medium Devices, Desktops
