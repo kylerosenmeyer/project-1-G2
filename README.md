@@ -1,7 +1,7 @@
 # project-1-G2
 Group 2 Project 1 - Kyle Rosenmeyer, Doug Nguyen, Auden Black, Bobby Simmons
 
-**Visual Travel Planner** (working title) is a web app to help you plan your next vacation, by putting you there. After collecting your travel interests, the app displays the usual weather, current traffic, available restaurants and more to your finger tips. 
+**Transpire** is a web app to help you plan your next vacation, by building a day for you in the place of your choice. After collecting your travel interests, the app displays the usual weather, things to do and see, and places to eat or drink.
 
 This app is usual learn how to tie together several web technologies to make a useful, and visually pleasing product. This app uses 3 APIs, 4 javascript libraries, a CSS framework, and firebase. 
 
